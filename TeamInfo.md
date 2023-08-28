@@ -10,8 +10,8 @@
 | Captain     |  alawini@illinois.edu  |
 | Member1     |        Kevin Pei       |
 | Member1     |   kevin2@illinois.edu  |
-| Member2     |    Bharati Kulkarni    |
-| Member2     |  bharati1@illinois.edu |
+| Member2     |    Shenghao Cheng      |
+| Member2     |      sc71@illinois.edu |
 | Member3     |       Lingge Wu        |
 | Member3     |  linggew2@illinois.edu |
 
