@@ -8,8 +8,8 @@
 | TeamName    |        FightOne        |
 | Captain     |       Abdu Alawini     |
 | Captain     |  alawini@illinois.edu  |
-| Member1     |        Kevin Pei       |
-| Member1     |   kevin2@illinois.edu  |
+| Member1     |      Tianhao Chen      |
+| Member1     |    tc30@illinois.edu   |
 | Member2     |    Shenghao Cheng      |
 | Member2     |      sc71@illinois.edu |
 | Member3     |       Lingge Wu        |
