@@ -6,8 +6,8 @@
 | ----------- | ---------------------- |
 | TeamID      |        Team-007        |
 | TeamName    |        FightOne        |
-| Captain     |       Abdu Alawini     |
-| Captain     |  alawini@illinois.edu  |
+| Captain     |        Jialu Xu        |
+| Captain     |   jialu5@illinois.edu  |
 | Member1     |      Tianhao Chen      |
 | Member1     |    tc30@illinois.edu   |
 | Member2     |    Shenghao Cheng      |
