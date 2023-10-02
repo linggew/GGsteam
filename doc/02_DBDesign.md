@@ -105,7 +105,7 @@ Game(
 ```mysql
 Category(
     category_id     INT         [PK], 
-    category_name   VARCHAR(30) [FK to table.column]
+    category_name   VARCHAR(30)
 );
 ```
 
