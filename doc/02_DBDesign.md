@@ -98,7 +98,6 @@ Game(
     about_text          VARCHAR(1000), 
     game_type           BOOLEAN, 
     is_free             BOOLEAN, 
-    category_id         INT             [FK to Category.category_id],
     pc_id               INT             [FK to PC.pc_id]
 );
 ```
@@ -121,6 +120,12 @@ GameOwnedUser(
 UserWishlist(
     user_id     INT [FK to User.user_id]  [PK], 
     query_id    INT [FK to Game.query_id] [PK]
+);
+```
+```mysql
+GameCategory(
+    category_id     INT [FK to Category.user_id]  [PK], 
+    query_id        INT [FK to Game.query_id]     [PK]
 );
 ```
 
