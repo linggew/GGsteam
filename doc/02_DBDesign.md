@@ -39,68 +39,68 @@ PC(
 ```
 ```mysql
 User(
-    user_id INT [PK], 
-    user_name VARCHAR(30), 
-    password VARCHAR(30), 
-    preference_id INT [FK to Preference.preference_id], 
-    pc_id INT [FK to PC.pc_id]
+    user_id         INT         [PK], 
+    user_name       VARCHAR(30), 
+    password        VARCHAR(30), 
+    preference_id   INT         [FK to Preference.preference_id], 
+    pc_id           INT         [FK to PC.pc_id]
 );
 ```
 
 ```mysql
 Preference(
-    preference_id INT [PK], 
-    dark_mode BOOLEAN, 
-    top_10 BOOLEAN, 
+    preference_id   INT     [PK], 
+    dark_mode       BOOLEAN, 
+    top_10          BOOLEAN, 
     recent_released BOOLEAN, 
-    most_commented BOOLEAN, 
-    most_popular BOOLEAN
+    most_commented  BOOLEAN, 
+    most_popular    BOOLEAN
 );
 ```
 
 ```mysql
 Review(
-    review_id INT [PK], 
-    user_id INT [FK to User.user_id], 
-    query_id INT [FK to Game.query_id], 
-    review_content VARCHAR(1000)
+    review_id       INT     [PK], 
+    user_id         INT     [FK to User.user_id], 
+    query_id        INT     [FK to Game.query_id], 
+    review_content  VARCHAR(1000)
 );
 ```
 
 ```mysql
 Game(
-    query_id INT [PK], 
-    name VARCHAR(50), 
-    platform_Mac BOOLEAN, 
-    platform_Windows BOOLEAN, 
-    platform_Linux BOOLEAN, 
-    released_date VARCHAR(30), 
-    price_initial DECIMAL(5, 2), 
-    about_text VARCHAR(1000), 
-    game_type BOOLEAN, 
-    is_free BOOLEAN, 
-    category_id INT [FK to Category.category_id]
+    query_id            INT             [PK], 
+    name                VARCHAR(50), 
+    platform_Mac        BOOLEAN, 
+    platform_Windows    BOOLEAN, 
+    platform_Linux      BOOLEAN, 
+    released_date       VARCHAR(30), 
+    price_initial       DECIMAL(5, 2), 
+    about_text          VARCHAR(1000), 
+    game_type           BOOLEAN, 
+    is_free             BOOLEAN, 
+    category_id         INT             [FK to Category.category_id]
 );
 ```
 
 ```mysql
 Category(
-    category_id INT [PK], 
-    category_name VARCHAR(30) [FK to table.column]
+    category_id     INT         [PK], 
+    category_name   VARCHAR(30) [FK to table.column]
 );
 ```
 
 ```mysql
 GameOwnedUser(
-    user_id INT [FK to User.user_id], 
-    query_id INT [FK to Game.query_id] [PK]
+    user_id     INT [FK to User.user_id], 
+    query_id    INT [FK to Game.query_id] [PK]
 );
 ```
 
 ```mysql
 UserWishlist(
-    user_id INT [FK to User.user_id], 
-    query_id INT [FK to Game.query_id] [PK]
+    user_id     INT [FK to User.user_id], 
+    query_id    INT [FK to Game.query_id] [PK]
 );
 ```
 
