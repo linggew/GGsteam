@@ -92,14 +92,14 @@ Category(
 
 ```mysql
 GameOwnedUser(
-    user_id     INT [FK to User.user_id], 
+    user_id     INT [FK to User.user_id][PK], 
     query_id    INT [FK to Game.query_id] [PK]
 );
 ```
 
 ```mysql
 UserWishlist(
-    user_id     INT [FK to User.user_id], 
+    user_id     INT [FK to User.user_id][PK], 
     query_id    INT [FK to Game.query_id] [PK]
 );
 ```
