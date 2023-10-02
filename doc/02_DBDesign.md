@@ -79,7 +79,8 @@ Game(
     about_text          VARCHAR(1000), 
     game_type           BOOLEAN, 
     is_free             BOOLEAN, 
-    category_id         INT             [FK to Category.category_id]
+    category_id         INT             [FK to Category.category_id],
+    pc_id               INT             [FK to PC.pc_id]
 );
 ```
 
