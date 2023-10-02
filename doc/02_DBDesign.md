@@ -35,7 +35,7 @@ $pc\\_id \to pc\\_attr$; \
 $user\\_id \to user\\_attr, \underline{pc\\_id}, \underline{preference\\_id}$; \
 $preference\\_id \to preference\\_attr$; \
 $review\\_id \to review\\_attr$; \
-$query\\_id \to game\\_attr, \underline{category\\_id}, \underline{pc\\_id}$; \
+$query\\_id \to game\\_attr, \underline{pc\\_id}$; \
 $category\\_id \to category\\_attr$; \
 $user\\_id, query\\_id \to \underline{review\\_id}$
 
