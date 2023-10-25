@@ -123,8 +123,10 @@ CREATE TABLE Review (
     user_id         INT,
     query_id        INT,
     review_content  VARCHAR(1000),
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    ON DELETE CASCADE,
     FOREIGN KEY (query_id) REFERENCES Game(query_id)
+    ON DELETE CASCADE
 );
 
 -- Category Table
@@ -138,8 +140,10 @@ CREATE TABLE GameOwnedUser (
     user_id     INT,
     query_id    INT,
     PRIMARY KEY (user_id, query_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    ON DELETE CASCADE,
     FOREIGN KEY (query_id) REFERENCES Game(query_id)
+    ON DELETE CASCADE
 );
 
 -- UserWishlist Table (many-to-many relationship)
@@ -147,8 +151,10 @@ CREATE TABLE UserWishlist (
     user_id     INT,
     query_id    INT,
     PRIMARY KEY (user_id, query_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    ON DELETE CASCADE,
     FOREIGN KEY (query_id) REFERENCES Game(query_id)
+    ON DELETE CASCADE
 );
 
 -- GameCategory Table (many-to-many relationship)
@@ -156,8 +162,10 @@ CREATE TABLE GameCategory (
     category_id     INT,
     query_id        INT,
     PRIMARY KEY (category_id, query_id),
-    FOREIGN KEY (category_id) REFERENCES Category(category_id),
+    FOREIGN KEY (category_id) REFERENCES Category(category_id)
+    ON DELETE CASCADE,
     FOREIGN KEY (query_id) REFERENCES Game(query_id)
+    ON DELETE CASCADE
 );
 
 ```
