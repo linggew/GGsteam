@@ -6,9 +6,10 @@ CREATE TABLE PC (
     pc_id     INT PRIMARY KEY,
     CPU       VARCHAR(50),
     GPU       VARCHAR(50),
-    ROM       VARCHAR(50),
-    Storage   VARCHAR(50),
-    RAM       VARCHAR(50)
+    ROM       INT,
+    Storage   INT,
+    RAM       INT,
+    Score     INT
 );
 
 -- Preference Table
