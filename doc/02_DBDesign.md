@@ -2,7 +2,7 @@
 
 ## UML Diagram
 
-![UML](./image/cs411-pt1-stage2-uml.png)
+![UML](./image/Stage2.jpg)
 
 ## Description
 The Game entity contains information from the Steam Games dataset. The entity has a unique Query_id and all the required information about the game like Name, release_date, Is_free, Platform, Price Initial,Price Final, AboutText, game type and category_id. This information can help us display the games to search results and filter the game during recommendations. There are 5 relationships related to Game Entity:
