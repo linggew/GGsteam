@@ -34,7 +34,7 @@ CREATE TABLE User (
 
 -- Game Table
 CREATE TABLE Game (
-    QueryID                    INT PRIMARY KEY,
+    query_id                   INT PRIMARY KEY,
     ResponseID                 INT,
     QueryName                  TEXT,
     ResponseName               TEXT,
