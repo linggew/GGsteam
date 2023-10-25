@@ -124,7 +124,7 @@ UserWishlist(
 ```
 ```mysql
 GameCategory(
-    category_id     INT [FK to Category.user_id]  [PK], 
+    category_id     INT [FK to Category.category_id]  [PK], 
     query_id        INT [FK to Game.query_id]     [PK]
 );
 ```
