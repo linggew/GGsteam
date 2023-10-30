@@ -145,7 +145,7 @@ CREATE TABLE GameCategory (
 # Advanced queries 
 
 1. #most owned 15 Games
-```
+```mysql
 SELECT * 
 FROM Game g right join (
 SELECT o.query_id
@@ -159,7 +159,7 @@ On g.query_id = o1.query_id;
 //screenshot of result
 
 2. #Top 15 Deal SinglePlayer Games
-```
+```mysql
 SELECT *
 FROM Game g1
 WHERE g1. PriceInitial >0 and g1.query_id IN (
