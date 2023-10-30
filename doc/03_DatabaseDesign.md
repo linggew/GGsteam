@@ -141,7 +141,7 @@ CREATE TABLE GameCategory (
 
 ```
 # Tables with count
-// screenshot of tables row number
+![connect](./image/tablescount.png)
 
 # Advanced queries 
 
