@@ -1,5 +1,6 @@
 # GCP connection
-//image of gcp connection
+
+![connect](./image/gcp_connection.png)
 
 # DDL
 
@@ -156,7 +157,7 @@ Limit 15
 ) o1
 On g.query_id = o1.query_id;
 ```
-//screenshot of result
+![query1](./image/query1.png)
 
 2. #Top 15 Deal SinglePlayer Games
 ```mysql
@@ -169,7 +170,7 @@ WHERE c.category_name = "CategorySinglePlayer")
 ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC
 LIMIT 15;
 ```
-//screenshot of result
+![query2](./image/query2.png)
 
 # Indexing Analysis
 1. +3% on trying at least three different indexing designs (excluding the default index) for each advanced query.
