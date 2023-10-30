@@ -1,3 +1,6 @@
+# GCP connection
+//image of gcp connection
+
 # DDL
 
 ```mysql
@@ -64,12 +67,6 @@ CREATE TABLE Game (
     PlatformWindows            BOOLEAN,
     PlatformLinux              BOOLEAN,
     PlatformMac                BOOLEAN,
-    PCReqsHaveMin              BOOLEAN,
-    PCReqsHaveRec              BOOLEAN,
-    LinuxReqsHaveMin           BOOLEAN,
-    LinuxReqsHaveRec           BOOLEAN,
-    MacReqsHaveMin             BOOLEAN,
-    MacReqsHaveRec             BOOLEAN,
     PriceCurrency              TEXT,
     PriceInitial               FLOAT,
     PriceFinal                 FLOAT,
@@ -83,15 +80,8 @@ CREATE TABLE Game (
     ExtUserAcctNotice          TEXT,
     HeaderImage                TEXT,
     LegalNotice                TEXT,
-    Reviews                    TEXT,
     SupportedLanguages         TEXT,
     Website                    TEXT,
-    PCMinReqsText              TEXT,
-    PCRecReqsText              TEXT,
-    LinuxMinReqsText           TEXT,
-    LinuxRecReqsText           TEXT,
-    MacMinReqsText             TEXT,
-    MacRecReqsText             TEXT,
     -- Foreign Key references
     pc_id                      INT,
     FOREIGN KEY (pc_id) REFERENCES PC(pc_id)
@@ -149,3 +139,39 @@ CREATE TABLE GameCategory (
 );
 
 ```
+# Tables with count
+// screenshot of tables row number
+
+# Advanced queries 
+
+1. #most owned 15 Games
+```
+SELECT * 
+FROM Game g right join (
+SELECT o.query_id
+FROM GameOwnedUser o
+Group by o.query_id
+Order By count(o.user_id) DESC
+Limit 15
+) o1
+On g.query_id = o1.query_id;
+```
+//screenshot of result
+
+2. #Top 15 Deal SinglePlayer Games
+```
+SELECT *
+FROM Game g1
+WHERE g1. PriceInitial >0 and g1.query_id IN (
+SELECT gc.query_id
+FROM Category c NATURAL JOIN GameCategory gc
+WHERE c.category_name = "CategorySinglePlayer") 
+ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC
+LIMIT 15;
+```
+//screenshot of result
+
+# Indexing Analysis
+1. +3% on trying at least three different indexing designs (excluding the default index) for each advanced query.
+2. +5% on the indexing analysis reports which includes screenshots of the EXPLAIN ANALYZE commands.
+3. +2% on the accuracy and thoroughness of the analyses.
