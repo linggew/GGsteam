@@ -145,7 +145,7 @@ CREATE TABLE GameCategory (
 
 # Advanced queries 
 
-1. #most owned paid 15 Games with high score
+1. Most Owned Paid 15 Games with High Score
 ```mysql
 SELECT * 
 FROM Game g LEFT JOIN (
@@ -153,13 +153,13 @@ FROM Game g LEFT JOIN (
     FROM GameOwnedUser o
     Group by o.query_id
 ) o1 ON g.query_id = o1.query_id
-WHERE g.Metacritic > 80 and IsFree = False
+WHERE g.Metacritic > 70 and IsFree = False
 ORDER BY o1.num_player
 LIMIT 15;
 ```
 ![query1](./image/query1.png)
 
-2. #Top 15 Deal SinglePlayer Games
+2. Top 15 Deal SinglePlayer Games
 ```mysql
 SELECT *
 FROM Game g1
@@ -175,45 +175,61 @@ LIMIT 15;
 
 # Indexing Analysis
 
-1. Most Owned 15 Games
-    1. Default Index
+1. Most Owned Paid 15 Games with High Score
+    1. Default Index (0.031)
         ```
-        -> Nested loop left join  (cost=8.12 rows=0) (actual time=0.202..0.304 rows=15 loops=1)
-         -> Table scan on o1  (cost=2.50..2.50 rows=0) (actual time=0.072..0.075 rows=15 loops=1)
-             -> Materialize  (cost=0.00..0.00 rows=0) (actual time=0.071..0.071 rows=15 loops=1)
-                 -> Limit: 15 row(s)  (actual time=0.057..0.059 rows=15 loops=1)
-                     -> Sort: count(o.user_id) DESC, limit input to 15 row(s) per chunk  (actual time=0.057..0.058 rows=15 loops=1)
-                         -> Stream results  (cost=5.25 rows=25) (actual time=0.034..0.044 rows=19 loops=1)
-                            -> Group aggregate: count(o.user_id)  (cost=5.25 rows=25) (actual time=0.032..0.040 rows=19 loops=1)
-                                -> Covering index scan on o using query_id  (cost=2.75 rows=25) (actual time=0.028..0.033 rows=25 loops=1)
-         -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.015..0.015 rows=1 loops=15)
+        -> Limit: 15 row(s)  (cost=15.35 rows=0) (actual time=0.289..0.416 rows=15 loops=1)
+            -> Nested loop inner join  (cost=15.35 rows=0) (actual time=0.288..0.414 rows=15 loops=1)
+                -> Sort: o1.num_player DESC  (cost=2.60..2.60 rows=0) (actual time=0.210..0.212 rows=20 loops=1)
+                    -> Table scan on o1  (cost=2.50..2.50 rows=0) (actual time=0.189..0.192 rows=22 loops=1)
+                        -> Materialize  (cost=0.00..0.00 rows=0) (actual time=0.189..0.189 rows=22 loops=1)
+                            -> Table scan on <temporary>  (actual time=0.168..0.171 rows=22 loops=1)
+                                -> Aggregate using temporary table  (actual time=0.166..0.166 rows=22 loops=1)
+                                    -> Covering index scan on o using PRIMARY  (cost=3.65 rows=34) (actual time=0.073..0.081 rows=35 loops=1)
+                -> Filter: ((g.IsFree = false) and (g.Metacritic > 70))  (cost=0.38 rows=0.05) (actual time=0.010..0.010 rows=1 loops=20)
+                    -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.009..0.009 rows=1 loops=20)
         ```
-    2. CREATE INDEX on GameOwnedUser.query_id (attempt to improve grouping and join performance)
+    2. CREATE INDEX on Game.MetaCritics (attempt to improve filter)
         ```
-        -> Nested loop left join  (cost=8.12 rows=0) (actual time=0.146..0.345 rows=15 loops=1)
-            -> Table scan on o1  (cost=2.50..2.50 rows=0) (actual time=0.107..0.115 rows=15 loops=1)
-                -> Materialize  (cost=0.00..0.00 rows=0) (actual time=0.106..0.106 rows=15 loops=1)
-                    -> Limit: 15 row(s)  (actual time=0.087..0.089 rows=15 loops=1)
-                        -> Sort: count(o.user_id) DESC, limit input to 15 row(s) per chunk  (actual time=0.086..0.087 rows=15 loops=1)
-                            -> Stream results  (cost=5.25 rows=25) (actual time=0.055..0.071 rows=19 loops=1)
-                                -> Group aggregate: count(o.user_id)  (cost=5.25 rows=25) (actual time=0.052..0.066 rows=19 loops=1)
-                                    -> Covering index scan on o using query_id  (cost=2.75 rows=25) (actual time=0.045..0.056 rows=25 loops=1)
-            -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.015..0.015 rows=1 loops=15)
+        -> Limit: 15 row(s)  (cost=15.35 rows=0) (actual time=0.126..0.236 rows=15 loops=1)
+            -> Nested loop inner join  (cost=15.35 rows=0) (actual time=0.125..0.234 rows=15 loops=1)
+                -> Sort: o1.num_player DESC  (cost=2.60..2.60 rows=0) (actual time=0.075..0.077 rows=20 loops=1)
+                    -> Table scan on o1  (cost=2.50..2.50 rows=0) (actual time=0.060..0.062 rows=22 loops=1)
+                        -> Materialize  (cost=0.00..0.00 rows=0) (actual time=0.059..0.059 rows=22 loops=1)
+                            -> Table scan on <temporary>  (actual time=0.045..0.047 rows=22 loops=1)
+                                -> Aggregate using temporary table  (actual time=0.043..0.043 rows=22 loops=1)
+                                    -> Covering index scan on o using PRIMARY  (cost=3.65 rows=34) (actual time=0.015..0.021 rows=35 loops=1)
+                -> Filter: ((g.IsFree = false) and (g.Metacritic > 70))  (cost=0.38 rows=0.05) (actual time=0.008..0.008 rows=1 loops=20)
+                    -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.007..0.007 rows=1 loops=20)
         ```
         Does not change at all
-     3. CREATE INDEX on GameOwnedUser.user_id (attempt to improve ordering performance)
+    3. CREATE INDEX on Game.IsFree (complement with Game.MetaCritics to improve filer)
         ```
-        -> Nested loop left join  (cost=8.12 rows=0) (actual time=0.197..0.571 rows=15 loops=1)
-            -> Table scan on o1  (cost=2.50..2.50 rows=0) (actual time=0.160..0.162 rows=15 loops=1)
-                -> Materialize  (cost=0.00..0.00 rows=0) (actual time=0.159..0.159 rows=15 loops=1)
-                    -> Limit: 15 row(s)  (actual time=0.145..0.147 rows=15 loops=1)
-                        -> Sort: count(o.user_id) DESC, limit input to 15 row(s) per chunk  (actual time=0.144..0.145 rows=15 loops=1)
-                            -> Table scan on <temporary>  (actual time=0.058..0.131 rows=19 loops=1)
-                                -> Aggregate using temporary table  (actual time=0.057..0.057 rows=19 loops=1)
-                                    -> Covering index scan on o using PRIMARY  (cost=2.75 rows=25) (actual time=0.032..0.038 rows=25 loops=1)
-            -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.027..0.027 rows=1 loops=15)
+        -> Limit: 15 row(s)  (cost=15.35 rows=0) (actual time=0.113..0.258 rows=15 loops=1)
+            -> Nested loop inner join  (cost=15.35 rows=0) (actual time=0.112..0.257 rows=15 loops=1)
+                -> Sort: o1.num_player DESC  (cost=2.60..2.60 rows=0) (actual time=0.079..0.081 rows=20 loops=1)
+                    -> Table scan on o1  (cost=2.50..2.50 rows=0) (actual time=0.063..0.066 rows=22 loops=1)
+                        -> Materialize  (cost=0.00..0.00 rows=0) (actual time=0.063..0.063 rows=22 loops=1)
+                            -> Table scan on <temporary>  (actual time=0.049..0.051 rows=22 loops=1)
+                                -> Aggregate using temporary table  (actual time=0.047..0.047 rows=22 loops=1)
+                                    -> Covering index scan on o using PRIMARY  (cost=3.65 rows=34) (actual time=0.021..0.028 rows=35 loops=1)
+                -> Filter: ((g.IsFree = false) and (g.Metacritic > 70))  (cost=0.38 rows=0.3) (actual time=0.008..0.009 rows=1 loops=20)
+                    -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.008..0.008 rows=1 loops=20)
         ```
-        It performed differently after the `Sort`, however, the latter one does not show the cost, by using the `Visual Explain` feature and approximating the actual time, they have similar performance. I think that might be because the table is limited to 15, so it is really small to predict the difference.
+        No change either
+    5. CREATE INDEX on GameOwnedUser.query (attempt to improve group and join performance)
+        ```
+        -> Limit: 15 row(s)  (cost=50.22 rows=11) (actual time=0.137..0.314 rows=15 loops=1)
+            -> Nested loop inner join  (cost=50.22 rows=11) (actual time=0.136..0.312 rows=15 loops=1)
+                -> Sort: o1.num_player DESC  (cost=34.07..34.07 rows=34) (actual time=0.093..0.095 rows=22 loops=1)
+                    -> Table scan on o1  (cost=10.54..13.38 rows=34) (actual time=0.073..0.076 rows=22 loops=1)
+                        -> Materialize  (cost=10.45..10.45 rows=34) (actual time=0.071..0.071 rows=22 loops=1)
+                            -> Group aggregate: count(o.user_id)  (cost=7.05 rows=34) (actual time=0.040..0.051 rows=22 loops=1)
+                                -> Covering index scan on o using query_id  (cost=3.65 rows=34) (actual time=0.034..0.041 rows=35 loops=1)
+                -> Filter: ((g.IsFree = false) and (g.Metacritic > 70))  (cost=0.38 rows=0.3) (actual time=0.010..0.010 rows=1 loops=22)
+                    -> Single-row index lookup on g using PRIMARY (query_id=o1.query_id)  (cost=0.38 rows=1) (actual time=0.009..0.009 rows=1 loops=22)
+        ```
+        It performed differently after the `Table scan`, however, the latter one does not show the cost, by using the `Visual Explain` feature and approximating the actual time, they have similar performance. I think that might be because the table is limited to 15, so it is really small to predict the difference. Also, it used `query_id` for covering index scan instead of `PRIMARY` which consists of `query_id` and `user_id`, but I don't think there is a different between those two.
 
 4. Top 15 Deal SinglePlayer Games
     1. Default Index
@@ -275,7 +291,6 @@ LIMIT 15;
         ```
         Does not work, the index does not work for ordering (maybe for ordering with the calculation)
 3. Final Index Design
-    1. GameOwnedUser.user_id - Although it did not improve the performance in the previous analysis, I think it is because of the size of the table, when the table size increased (more users joined) it can provide great help in the grouping clause.
-    2. Game.InitialPrice - When buying games, price is an important aspect to be considered, so there will be a lot of queries to use `InitialPrice` as the filter, and setting it as the index could improve those performances.
-    3. GameCategory.category_name - Same as price, people often search for games in the category they want to play, so it is often used in where/group clauses, so indexing it could optimize performance.
-    4. Other attributes I tested above are useless in the queries above, so I am not adopting those as indexes.
+    1. Game.InitialPrice - When buying games, price is an important aspect to be considered, so there will be a lot of queries to use `InitialPrice` as the filter, and setting it as the index could improve those performances.
+    2. GameCategory.category_name - Same as price, people often search for games in the category they want to play, so it is often used in where/group clauses, so indexing it could optimize performance.
+    3. Other attributes I tested above are useless in the queries above, so I am not adopting those as indexes. Some might be because of the size of the table, which is open for testing later.
