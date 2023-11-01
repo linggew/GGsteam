@@ -145,17 +145,17 @@ CREATE TABLE GameCategory (
 
 # Advanced queries 
 
-1. #most owned 15 Games
+1. #most owned paid 15 Games with high score
 ```mysql
 SELECT * 
-FROM Game g right join (
-SELECT o.query_id
-FROM GameOwnedUser o
-Group by o.query_id
-Order By count(o.user_id) DESC
-Limit 15
-) o1
-On g.query_id = o1.query_id;
+FROM Game g LEFT JOIN (
+    SELECT o.query_id, count(o.user_id) as num_player
+    FROM GameOwnedUser o
+    Group by o.query_id
+) o1 ON g.query_id = o1.query_id
+WHERE g.Metacritic > 80 and IsFree = False
+ORDER BY o1.num_player
+LIMIT 15;
 ```
 ![query1](./image/query1.png)
 
@@ -163,7 +163,7 @@ On g.query_id = o1.query_id;
 ```mysql
 SELECT *
 FROM Game g1
-WHERE g1. PriceInitial >0 and g1.query_id IN (
+WHERE g1. PriceInitial > 0 and g1.query_id IN (
     SELECT gc.query_id
     FROM Category c NATURAL JOIN GameCategory gc
     WHERE c.category_name = "CategorySinglePlayer"
