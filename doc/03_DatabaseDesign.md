@@ -164,9 +164,10 @@ On g.query_id = o1.query_id;
 SELECT *
 FROM Game g1
 WHERE g1. PriceInitial >0 and g1.query_id IN (
-SELECT gc.query_id
-FROM Category c NATURAL JOIN GameCategory gc
-WHERE c.category_name = "CategorySinglePlayer") 
+    SELECT gc.query_id
+    FROM Category c NATURAL JOIN GameCategory gc
+    WHERE c.category_name = "CategorySinglePlayer"
+) 
 ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC
 LIMIT 15;
 ```
