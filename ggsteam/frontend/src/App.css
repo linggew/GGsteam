@@ -1,36 +1,171 @@
-.App {
+.headerContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  padding: 20px;
   text-align: center;
+  justify-content: space-between;
 }
 
-.form {
+nav {
+  /* flex-direction: row; */
+}
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+.headerList a {
+  text-decoration: none;
+  margin-left: 40px;
+  color: white;
+  font-size: 20px;
+}
+.activeheader a {
+  text-decoration: none;
+  margin-left: 40px;
+  font-weight: bold;
+  color: rgba(167, 146, 236, 0.9);
+  font-size: 20px;
+}
+.button {
+  background-color: rgb(72, 70, 67);
+  color: white;
+  border-width: 1px;
+  border-color: aliceblue;
+  z-index: 101;
+}
+.drawerStyle {
+  /* background-color: green; i found  */
+  font-size: 24px;
+  color: white;
+  margin-top: 90px;
+}
+.drawerItem {
+  margin-top: 30px;
+}
+
+footer {
+  background-color: black;
+  padding: 30px;
+  margin-bottom: 0;
+  color: white;
+  font-size: 24;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* ---------------- Navbar and burger menu ------------------ */
+nav {
+  width: 100%;
+  height: 5em;
+  background-color: rgb(65, 68, 92);
+  display: flex;
+  justify-content: flex-start;
+  padding: 1em;
+}
+
+.burger-menu {
+  height: 100%;
+  width: 4em;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
-.form input {
-  width: 300px;
-  height: 60px;
-  margin: 10px;
-  font-size: 25px;
+.burger-bar {
+  width: 4em;
+  height: 0.5em;
+  background-color: rgb(0, 183, 255);
+  border-radius: 0.5em;
 }
 
-.card {
-  width: 500px;
-  height: 190px;
-  border: 2px solid grey;
-  border-radius: 15px;
-  margin: 10px;
+.menu {
+  width: 20%;
+  height: 100vh;
+  background-color: rgb(154, 181, 240);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
-.gameImg {
+/* ------------- sliding menu ------------------ */
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: inherit;
+}
+
+/* ----- animations--------- */
+/* clicked */
+.burger-bar.clicked:nth-child(1) {
+  transform: rotate(45deg) translate(0.75em, 1.25em);
+  transition: ease-out 0.5s;
+}
+
+.burger-bar.clicked:nth-child(2) {
+  transform: scale(0.1);
+  transition: ease-out 0.5s;
+}
+
+.burger-bar.clicked:nth-child(3) {
+  transform: rotate(135deg) translate(-0.5em, 1em);
+  transition: ease-out 0.5s;
+}
+
+/* unclicked */
+.burger-bar.unclicked {
+  transform: rotate(0) translate(0);
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+.drawerPaper {
+  background-color: lightgray;
   width: 250px;
-  height: 80px;
+  margin-top: 80px;
+}
+/* ProfileComponent.css */
+.profile-container {
+  position: relative;
 }
 
-#updateInput {
+.profile-photo {
   width: 100px;
-  height: 20px;
-  margin-bottom: 10px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-info {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-name {
+  margin: 0;
+}
+
+.sign-out-btn {
+  background-color: #f44336;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
 }
