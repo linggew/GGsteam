@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 import Drawer from '@mui/material/Drawer'
 import { Route, Routes, Link } from 'react-router-dom'
-import Home from '../screens/Home'
-import Help from '../screens/Help'
-import About from '../screens/About'
-import Login from '../screens/Login'
-import SignUp from '../screens/Signup'
-import ForgotPassword from '../screens/ForgotPassword'
 import '../App.css'
 
 const BurgerMenu = () => {
@@ -62,14 +56,6 @@ const BurgerMenu = () => {
           </nav>
         </div>
       </Drawer>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forget-password" element={<ForgotPassword />} />
-        <Route path="/sign-up" element={<SignUp />} />
-      </Routes>
     </div>
   )
 }
