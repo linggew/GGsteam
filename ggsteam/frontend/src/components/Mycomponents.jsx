@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios' // Import axios
 import Axios from 'axios'
 import '../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRocket, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import config from '../config';
 const MyComponent = () => {
   const [gameList, setGameList] = useState([])
 
   const getGames = () => {
-    Axios.get('http://localhost:3002/games', {}).then((res) => {
+    Axios.get(config.apiUrl+'/api/games', {}).then((res) => {
       console.log(res.data)
       setGameList(res.data)
     })
@@ -41,8 +41,7 @@ const MyComponent = () => {
                     src={game.HeaderImage}
                     alt={game.QueryName}
                   />
-                  <p> Game Name: {game.QueryName} </p>
-                  <p> Release Date: {game.ReleaseDate}</p>
+                  <p> {game.QueryName} </p>
                 </div>
               )
             })}
