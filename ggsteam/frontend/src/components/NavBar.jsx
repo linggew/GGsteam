@@ -25,13 +25,17 @@ export default function NavBar() {
   return (
     <nav>
       <BurgerMenu />
-      <img src={require("../assets/logo.jpg")} alt="logo" />
-      <img src={require("../assets/search.png")} alt="search" />
+      <img src={require('../assets/logo.jpg')} alt="logo" />
+      <img src={require('../assets/search.png')} alt="search" />
       <DropdownMenu
         onSelectCategory={handleCategoryChange}
         onSelectPC={handlePlatformChange}
       />
-      <img src={require("../assets/rank.jpg")} alt="rank" onClick={handleRankClick} />
+      <img
+        src={require('../assets/rank.jpg')}
+        alt="rank"
+        onClick={handleRankClick}
+      />
       {/* Display the dropdown content based on the state */}
       {rankClick && (
         <select name="" id="rank" value={rankway} onChange={handleRankway}>

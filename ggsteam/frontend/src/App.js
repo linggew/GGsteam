@@ -50,10 +50,10 @@ function App () {
         <Route path="/home" element={<Home />} />
         <Route path="/help" element={<Help />} />
         <Route path="/about" element={<About />} />
-        <Route path="/most-popular" element={<About />} />
-        <Route path="/most-owned" element={<About />} />
-        <Route path="/most-commented" element={<About />} />
-        <Route path="/trend" element={<About />} />
+        <Route path="/most-popular" element={<MostPopular />} />
+        <Route path="/most-owned" element={<MostOwned />} />
+        <Route path="/most-commented" element={<MostCommended />} />
+        <Route path="/trend" element={<Trend />} />
       </Routes>
     </div>
   )
