@@ -1,113 +1,49 @@
-// SignUpPage.js
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import '../App.css'
+import React, { useState } from 'react';
+import axios from 'axios';
+import config from '../config';
+
 const SignUp = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  })
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
-  const navigate = useNavigate()
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    // Add validation logic here
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match')
-      return
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(config.apiUrl+'/api/signup', { username, password });
+      setMessage(response.data);
+    } catch (error) {
+      setMessage('Failed to sign up');
     }
-
-    // Send signup data to your backend API
-    // Example using fetch:
-    // fetch('your-api-endpoint/signup', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // Handle success or error
-    //     console.log(data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error:', error);
-    //   });
-
-    // For this example, let's assume the signup was successful
-    alert('Signup successful!')
-    // Redirect to login page after signup
-    navigate('/login')
-  }
+  };
 
   return (
-    <div className="loginContainer">
+    <div>
       <h1>Sign Up</h1>
-      <div className="loginbox">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Confirm Password:
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">Sign Up</button>
-        </form>
-        <p>
-          Already have an account?{' '}
-          <span onClick={() => navigate('/login')}>Login</span>
-        </p>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <br />
+        <button type="submit">Sign Up</button>
+      </form>
+      {message && <p>{message}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

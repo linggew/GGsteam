@@ -1,22 +1,35 @@
-// LoginPage.js
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import '../App.css'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../App.css';
+import config from '../config';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const history = useNavigate()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Simulate login logic (in a real app, this would be an API call)
-    if (username === 'user' && password === 'password') {
-      // Redirect to the dashboard on successful login
-      history('/home')
-    } else {
-      alert('Invalid username or password')
+  const handleLogin = async () => {
+    try {
+      // Make an API call to your backend
+      const response = await axios.get(config.apiUrl+'/api/login', {
+        params: { username, password }
+      });
+
+      // Check if login is successful based on the response
+      if (response.data && response.data.message === 'Login successful') {
+        // Redirect to the dashboard on successful login
+        navigate('/home');
+      } else {
+        // Handle failed login
+        alert('Invalid username or password');
+      }
+    } catch (error) {
+      // Handle any errors during the API call
+      console.error('Login error:', error);
+      alert('Login failed. Please try again.');
     }
-  }
+  };
 
   return (
     <div className="loginContainer">
@@ -42,14 +55,14 @@ const LoginPage = () => {
         <br />
         <button onClick={handleLogin}>Login</button>
         <p>
-          <span onClick={() => history('/forget-password')}>
+          <span onClick={() => navigate('/forget-password')}>
             Forget Password
           </span>{' '}
-          | <span onClick={() => history('/sign-up')}>Sign Up</span>
+          | <span onClick={() => navigate('/sign-up')}>Sign Up</span>
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
