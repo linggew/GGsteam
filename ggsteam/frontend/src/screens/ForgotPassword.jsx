@@ -1,7 +1,7 @@
 // ForgetPasswordPage.js
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import '../App.css'
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState('')
   const navigate = useNavigate()
@@ -15,24 +15,26 @@ const ForgetPasswordPage = () => {
   }
 
   return (
-    <div>
+    <div className="loginContainer">
       <h1>Forget Password Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      <p>
-        <span onClick={() => navigate('/login')}>Back to Login</span>
-      </p>
+      <div className="loginbox">
+        <form onSubmit={handleSubmit}>
+          <label>
+            Email:
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+        <p>
+          <span onClick={() => navigate('/login')}>Back to Login</span>
+        </p>
+      </div>
     </div>
   )
 }

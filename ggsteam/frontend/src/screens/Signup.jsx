@@ -1,7 +1,7 @@
 // SignUpPage.js
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import '../App.css'
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -51,59 +51,61 @@ const SignUp = () => {
   }
 
   return (
-    <div>
+    <div className="loginContainer">
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Confirm Password:
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Sign Up</button>
-      </form>
-      <p>
-        Already have an account?{' '}
-        <span onClick={() => navigate('/login')}>Login</span>
-      </p>
+      <div className="loginbox">
+        <form onSubmit={handleSubmit}>
+          <label>
+            Username:
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Confirm Password:
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <button type="submit">Sign Up</button>
+        </form>
+        <p>
+          Already have an account?{' '}
+          <span onClick={() => navigate('/login')}>Login</span>
+        </p>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 // LoginPage.js
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../App.css'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
@@ -18,31 +19,35 @@ const LoginPage = () => {
   }
 
   return (
-    <div>
+    <div className="loginContainer">
       <h1>Login Page</h1>
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <br />
-      <button onClick={handleLogin}>Login</button>
-      <p>
-        <span onClick={() => history('/forget-password')}>Forget Password</span>{' '}
-        | <span onClick={() => history('/sign-up')}>Sign Up</span>
-      </p>
+      <div className="loginbox">
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <br />
+        <button onClick={handleLogin}>Login</button>
+        <p>
+          <span onClick={() => history('/forget-password')}>
+            Forget Password
+          </span>{' '}
+          | <span onClick={() => history('/sign-up')}>Sign Up</span>
+        </p>
+      </div>
     </div>
   )
 }

@@ -1,29 +1,122 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios' // Import axios
-
+import Axios from 'axios'
+import '../App.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRocket, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 const MyComponent = () => {
-  const [data, setData] = useState([])
+  const [gameList, setGameList] = useState([])
 
+  const getGames = () => {
+    Axios.get('http://localhost:3002/games', {}).then((res) => {
+      console.log(res.data)
+      setGameList(res.data)
+    })
+  }
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/data')
-        setData(response.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchData()
+    getGames()
   }, [])
 
   return (
-    <div>
-      <p>Hello Cloud SQL!</p>
-      <p>Data from Node.js Backend:</p>
-      {data.map((item) => (
-        <p key={item.id}>{JSON.stringify(item)}</p>
-      ))}
+    <div className="cardBody">
+      <h1> CRUD APPLICATIONS</h1>
+      <div className="form">
+        <label> Game Lists:</label>
+
+        {/* <button onClick={getGames}> Get Games </button> */}
+        <div className="cardBox">
+          <div className="cardContainer">
+            <div className="containerTitle">
+              <h1>most popular game</h1>
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+              />{' '}
+            </div>
+            {gameList.map((game) => {
+              return (
+                <div className="card">
+                  <img
+                    className="gameImg"
+                    src={game.HeaderImage}
+                    alt={game.QueryName}
+                  />
+                  <p> Game Name: {game.QueryName} </p>
+                  <p> Release Date: {game.ReleaseDate}</p>
+                </div>
+              )
+            })}
+          </div>
+          <div className="cardContainer">
+            <div className="containerTitle">
+              <h1>most popular game</h1>
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+              />{' '}
+            </div>
+            {gameList.map((game) => {
+              return (
+                <div className="card">
+                  <img
+                    className="gameImg"
+                    src={game.HeaderImage}
+                    alt={game.QueryName}
+                  />
+                  <p> Game Name: {game.QueryName} </p>
+                  <p> Release Date: {game.ReleaseDate}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+        <div className="cardBox">
+          <div className="cardContainer">
+            <div className="containerTitle">
+              <h1>most popular game</h1>
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+              />{' '}
+            </div>
+            {gameList.map((game) => {
+              return (
+                <div className="card">
+                  <img
+                    className="gameImg"
+                    src={game.HeaderImage}
+                    alt={game.QueryName}
+                  />
+                  <p> Game Name: {game.QueryName} </p>
+                  <p> Release Date: {game.ReleaseDate}</p>
+                </div>
+              )
+            })}
+          </div>
+          <div className="cardContainer">
+            <div className="containerTitle">
+              <h1>most popular game</h1>
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+              />{' '}
+            </div>
+            {gameList.map((game) => {
+              return (
+                <div className="card">
+                  <img
+                    className="gameImg"
+                    src={game.HeaderImage}
+                    alt={game.QueryName}
+                  />
+                  <p> Game Name: {game.QueryName} </p>
+                  <p> Release Date: {game.ReleaseDate}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
