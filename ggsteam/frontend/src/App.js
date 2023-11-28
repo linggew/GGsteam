@@ -9,6 +9,11 @@ import ForgotPassword from './screens/ForgotPassword'
 import Home from './screens/Home'
 import Help from './screens/Help'
 import About from './screens/About'
+import Trend from "./screens/Trend"
+import MostCommended from "./screens/MostCommended"
+import MostOwned from "./screens/MostOwned"
+import MostPopular from "./screens/MostPopular"
+import GameDetail from "./screens/GameDetail"
 function App () {
   // const [gameList, setGameList] = useState([])
 
@@ -54,6 +59,7 @@ function App () {
         <Route path="/most-owned" element={<MostOwned />} />
         <Route path="/most-commented" element={<MostCommended />} />
         <Route path="/trend" element={<Trend />} />
+        <Route path="/games/:id" element={<GameDetail />} />
       </Routes>
     </div>
   )

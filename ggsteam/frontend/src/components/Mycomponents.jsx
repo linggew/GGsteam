@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import '../App.css'
+import { Route, Routes, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRocket, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import config from '../config';
+import config from '../config'
 const MyComponent = () => {
   const [gameList, setGameList] = useState([])
 
   const getGames = () => {
-    Axios.get(config.apiUrl+'/api/games', {}).then((res) => {
+    Axios.get(config.apiUrl + '/api/games', {}).then((res) => {
       console.log(res.data)
       setGameList(res.data)
     })
@@ -26,13 +27,16 @@ const MyComponent = () => {
         {/* <button onClick={getGames}> Get Games </button> */}
         <div className="cardBox">
           <div className="cardContainer">
-            <div className="containerTitle">
-              <h1>most popular game</h1>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-              />{' '}
-            </div>
+            <Link to="/most-popular">
+              <div className="containerTitle">
+                <h1>most popular game</h1>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+                />{' '}
+              </div>
+            </Link>
+
             {gameList.map((game) => {
               return (
                 <div className="card">
@@ -47,13 +51,15 @@ const MyComponent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <div className="containerTitle">
-              <h1>most popular game</h1>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-              />{' '}
-            </div>
+            <Link to="/most-popular">
+              <div className="containerTitle">
+                <h1>most popular game</h1>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+                />{' '}
+              </div>
+            </Link>
             {gameList.map((game) => {
               return (
                 <div className="card">
@@ -62,8 +68,7 @@ const MyComponent = () => {
                     src={game.HeaderImage}
                     alt={game.QueryName}
                   />
-                  <p> Game Name: {game.QueryName} </p>
-                  <p> Release Date: {game.ReleaseDate}</p>
+                  <p> {game.QueryName} </p>
                 </div>
               )
             })}
@@ -71,13 +76,15 @@ const MyComponent = () => {
         </div>
         <div className="cardBox">
           <div className="cardContainer">
-            <div className="containerTitle">
-              <h1>most popular game</h1>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-              />{' '}
-            </div>
+            <Link to="/most-popular">
+              <div className="containerTitle">
+                <h1>most popular game</h1>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+                />{' '}
+              </div>
+            </Link>
             {gameList.map((game) => {
               return (
                 <div className="card">
@@ -86,20 +93,21 @@ const MyComponent = () => {
                     src={game.HeaderImage}
                     alt={game.QueryName}
                   />
-                  <p> Game Name: {game.QueryName} </p>
-                  <p> Release Date: {game.ReleaseDate}</p>
+                  <p>{game.QueryName} </p>
                 </div>
               )
             })}
           </div>
           <div className="cardContainer">
-            <div className="containerTitle">
-              <h1>most popular game</h1>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-              />{' '}
-            </div>
+            <Link to="/most-popular">
+              <div className="containerTitle">
+                <h1>most popular game</h1>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+                />{' '}
+              </div>
+            </Link>
             {gameList.map((game) => {
               return (
                 <div className="card">
@@ -108,8 +116,7 @@ const MyComponent = () => {
                     src={game.HeaderImage}
                     alt={game.QueryName}
                   />
-                  <p> Game Name: {game.QueryName} </p>
-                  <p> Release Date: {game.ReleaseDate}</p>
+                  <p>{game.QueryName} </p>
                 </div>
               )
             })}
