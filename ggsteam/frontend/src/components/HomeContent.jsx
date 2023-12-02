@@ -84,7 +84,7 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>most popular game</h1>
+                <h1>Most popular game</h1>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
@@ -105,7 +105,7 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>most popular game</h1>
+                <h1>Most played game</h1>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
@@ -125,7 +125,7 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>most popular game</h1>
+                <h1>Best deal of single player</h1>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
@@ -147,7 +147,7 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>most popular game</h1>
+                <h1>Popular free game</h1>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
@@ -168,7 +168,7 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>most popular game</h1>
+                <h1>Most Owned Paid Games</h1>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
@@ -188,7 +188,7 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>most popular game</h1>
+                <h1>Most reviewed games </h1>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
