@@ -24,13 +24,10 @@ const HomeContent = () => {
       <div className="form">
         <div className="cardBox">
           <div className="cardContainer">
-            <Link to="/most-popular">
+            <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
                 <h1>most popular game</h1>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-                />{' '}
+                <span className="arrow">&rarr;</span>
               </div>
             </Link>
 
@@ -48,13 +45,10 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular">
+            <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
                 <h1>most popular game</h1>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-                />{' '}
+                <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {gameList.map((game) => {
@@ -71,13 +65,10 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular">
+            <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
                 <h1>most popular game</h1>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-                />{' '}
+                <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {gameList.map((game) => {
@@ -96,13 +87,10 @@ const HomeContent = () => {
         </div>
         <div className="cardBox">
           <div className="cardContainer">
-            <Link to="/most-popular">
+            <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
                 <h1>most popular game</h1>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-                />{' '}
+                <span className="arrow">&rarr;</span>
               </div>
             </Link>
 
@@ -120,13 +108,10 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular">
+            <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
                 <h1>most popular game</h1>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-                />{' '}
+                <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {gameList.map((game) => {
@@ -143,13 +128,10 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular">
+            <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
                 <h1>most popular game</h1>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
-                />{' '}
+                <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {gameList.map((game) => {
