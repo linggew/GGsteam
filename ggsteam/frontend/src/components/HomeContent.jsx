@@ -103,7 +103,7 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular" className="linkStyles">
+            <Link to="/most-played" className="linkStyles">
               <div className="containerTitle">
                 <h1>Most played game</h1>
                 <span className="arrow">&rarr;</span>
@@ -123,7 +123,7 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular" className="linkStyles">
+            <Link to="/most-deal" className="linkStyles">
               <div className="containerTitle">
                 <h1>Best deal of single player</h1>
                 <span className="arrow">&rarr;</span>
@@ -145,7 +145,7 @@ const HomeContent = () => {
         </div>
         <div className="cardBox">
           <div className="cardContainer">
-            <Link to="/most-popular" className="linkStyles">
+            <Link to="/most-free" className="linkStyles">
               <div className="containerTitle">
                 <h1>Popular free game</h1>
                 <span className="arrow">&rarr;</span>
@@ -166,7 +166,7 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular" className="linkStyles">
+            <Link to="/most-owned" className="linkStyles">
               <div className="containerTitle">
                 <h1>Most Owned Paid Games</h1>
                 <span className="arrow">&rarr;</span>
@@ -186,7 +186,7 @@ const HomeContent = () => {
             })}
           </div>
           <div className="cardContainer">
-            <Link to="/most-popular" className="linkStyles">
+            <Link to="/most-reviewed" className="linkStyles">
               <div className="containerTitle">
                 <h1>Most reviewed games </h1>
                 <span className="arrow">&rarr;</span>

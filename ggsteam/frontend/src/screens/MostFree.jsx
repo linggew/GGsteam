@@ -5,7 +5,7 @@ import config from '../config'
 import '../App.css'
 import { Header, Footer, GameFilter } from '../components'
 
-function MostOwned() {
+function MostFree() {
   const [gameList, setGameList] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -16,7 +16,7 @@ function MostOwned() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/most5', {})
+        const res = await Axios.get(config.apiUrl + '/api/most4', {})
         setGameList(res.data)
         setLoading(false)
         setFilteredGame(res.data.slice(startIndex, endIndex))
@@ -84,4 +84,4 @@ function MostOwned() {
   )
 }
 
-export default MostOwned
+export default MostFree

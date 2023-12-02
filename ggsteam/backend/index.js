@@ -77,7 +77,7 @@ app.get("/api/most-popular/most-viewd1", async (req, res) => {
 })
 
 //most played
-app.get("/api/games/most2", async (req, res) => {
+app.get("/api/most2", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY SteamSpyOwners DESC LIMIT 1000"
   pool.query(query, (error, results) => {
     if (error) {
@@ -103,7 +103,7 @@ app.get("/api/most2/most-viewd2", async (req, res) => {
 })
 
 //best deal of single player
-app.get("/api/games/most3", async (req, res) => {
+app.get("/api/most3", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer') ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC LIMIT 1000;"
   pool.query(query, (error, results) => {
     if (error) {
@@ -129,7 +129,7 @@ app.get("/api/most3/most-viewd3", async (req, res) => {
 })
 
 //popular free game
-app.get("/api/games/most4", async (req, res) => {
+app.get("/api/most4", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game WHERE IsFree=1 ORDER BY RecommendationCount DESC LIMIT 1000"
   pool.query(query, (error, results) => {
     if (error) {
@@ -155,7 +155,7 @@ app.get("/api/most4/most-viewd4", async (req, res) => {
 })
 
 //Most Owned Paid Games with High Score
-app.get("/api/games/most5", async (req, res) => {
+app.get("/api/most5", async (req, res) => {
   const query = "SELECT g.query_id, g.QueryName, g.HeaderImage FROM Game g LEFT JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 ON g.query_id = o1.query_id WHERE g.Metacritic > 70 and IsFree = False ORDER BY o1.num_player LIMIT 1000;"
   pool.query(query, (error, results) => {
     if (error) {
@@ -181,7 +181,7 @@ app.get("/api/most5/most-viewd5", async (req, res) => {
 })
 
 //most reviewd games
-app.get("/api/games/most6", async (req, res) => {
+app.get("/api/most6", async (req, res) => {
   const query = "SELECT g2.query_id, g2.QueryName, g2.HeaderImage FROM Game g2 JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1 USING(query_id) ORDER BY countr DESC;"
   pool.query(query, (error, results) => {
     if (error) {
