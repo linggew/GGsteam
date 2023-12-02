@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import config from '../config'
 import '../App.css'
-import { Header, Footer } from '../components'
+import { Header, Footer, GameFilter } from '../components'
 
 function MostPopular() {
   const [gameList, setGameList] = useState([])
@@ -12,18 +12,14 @@ function MostPopular() {
   const itemsPerPage = 10 // Number of items to display per page
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const [filteredPokemons, setFilteredPokemons] = useState(gameList)
+  const [filteredGame, setFilteredGame] = useState(gameList)
   useEffect(() => {
-    // console.log('+++++++++++++:  ' + currentPage)
     const fetchData = async () => {
       try {
         const res = await Axios.get(config.apiUrl + '/api/most-popular', {})
         setGameList(res.data)
         setLoading(false)
-        setFilteredPokemons(res.data.slice(startIndex, endIndex))
-        // console.log('+++++++++++++:  ' + filteredPokemons.length)
-        // console.log('ooooooo:  ' + startIndex)
-        // console.log('ooooooo:  ' + endIndex)
+        setFilteredGame(res.data.slice(startIndex, endIndex))
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -40,23 +36,22 @@ function MostPopular() {
           <p className="loading">Loading...</p>
         ) : (
           <div className="listbodyy">
-            {/* <div className="listbutton"> */}
-            {/* <PokemonSearch onSearch={handleSearch} /> */}
-            {/* <SortBar handleSort={sortAllPokemons} /> */}
-            {/* </div> */}
+            <div>
+              <GameFilter />
+            </div>
             <ul className="listcontainer">
-              {filteredPokemons.map((pokemon, index) => (
-                <Link to={`/games/${pokemon.query_id}`} className="link">
+              {filteredGame.map((game, index) => (
+                <Link to={`/games/${game.query_id}`} className="link">
                   <li
                     key={index}
                     className="listbox"
                     style={{ cursor: 'pointer' }}>
                     <img
                       className="listimg"
-                      src={pokemon.HeaderImage}
-                      alt={`fail to show ${pokemon.QueryName}`}
+                      src={game.HeaderImage}
+                      alt={`fail to show ${game.QueryName}`}
                     />
-                    <p>{pokemon.QueryName}</p>
+                    <p>{game.QueryName}</p>
                   </li>
                 </Link>
               ))}

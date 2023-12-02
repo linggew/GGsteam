@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import config from '../config'
 import '../App.css'
 import { Header, Footer } from '../components'
+
 function GameDetail() {
   const [game, setGame] = useState([])
   const { id } = useParams()
@@ -14,7 +15,6 @@ function GameDetail() {
         const res = await Axios.get(config.apiUrl + `/api/games/${id}`, {})
         console.log(res.data)
         setGame(res.data[0])
-        // console.log('++++++++++++hh' + poke.length)
         setLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -23,12 +23,13 @@ function GameDetail() {
 
     fetchData()
   }, [])
+
   const backgroundImageUrl = game.Background
   const containerStyle = {
     background: `url(${backgroundImageUrl})`,
-    backgroundSize: 'cover', // You can adjust these properties based on your design needs
+    backgroundSize: 'cover',
     backgroundPosition: 'center',
-    minHeight: '100vh', // Set a minimum height to cover the entire viewport
+    minHeight: '100vh',
   }
   return (
     <div>
