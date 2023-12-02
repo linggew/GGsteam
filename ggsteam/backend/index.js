@@ -264,3 +264,96 @@ const PORT = process.env.PORT || 3002
 app.listen(PORT, () => {
   console.log("running on port " + PORT)
 })
+
+
+//get user wishlist
+app.get("/api/wishlist/:id", async (req, res) => {
+  const query = "SELECT query_id, QueryName, HeaderImage FROM Game NATURAL JOIN UserWishlist WHERE user_id = ?"
+  pool.query(query, [req.params.id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.json(results)
+  })
+})
+
+//get user wishlist
+app.get("/api/wishlist/:id", async (req, res) => {
+  const query = "SELECT query_id, QueryName, HeaderImage FROM Game NATURAL JOIN UserWishlist WHERE user_id = ?"
+  pool.query(query, [req.params.id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.json(results)
+  })
+})
+
+//add game to user wishlist /api/wishlist/addgame?user_id=1&query_id=2
+app.get("/api/wishlist/addgame", async (req, res) => {
+  const query = "INSERT INTO UserWishlist VALUES(?,?)"
+  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.status(200).send("Game added")
+  })
+})
+
+//delete game from user wishlist /api/wishlist/removegame?user_id=1&query_id=2
+app.get("/api/wishlist/removegame", async (req, res) => {
+  const query = "DELETE FROM UserWishlist WHERE user_id=? AND query_id=?;"
+  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.status(200).send("Game deleted")
+  })
+})
+
+
+//get user ownedlist
+app.get("/api/ownedlist/:id", async (req, res) => {
+  const query = "SELECT query_id, QueryName, HeaderImage FROM Game NATURAL JOIN GameOwnedUser WHERE user_id = ?"
+  pool.query(query, [req.params.id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.json(results)
+  })
+})
+
+//add game to user ownedlist /api/ownedlist/addgame?user_id=1&query_id=2
+app.get("/api/ownedlist/addgame", async (req, res) => {
+  const query = "INSERT INTO GameOwnedUser VALUES(?,?)"
+  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.status(200).send("Game added")
+  })
+})
+
+//delete game from user ownedlist /api/ownedlist/removegame?user_id=1&query_id=2
+app.get("/api/ownedlist/removegame", async (req, res) => {
+  const query = "DELETE FROM GameOwnedUser WHERE user_id=? AND query_id=?;"
+  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.status(200).send("Game deleted")
+  })
+})
