@@ -42,7 +42,7 @@ const Menu = () => {
           <nav>
             <ul style={{ display: 'flex', flexDirection: 'column' }}>
               <li>
-                <Link to="/home">Home</Link>
+                <Link to="/">Home</Link>
               </li>
               <li>
                 <Link to="/favorite">Favorite List</Link>
