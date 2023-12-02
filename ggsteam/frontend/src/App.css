@@ -13,27 +13,11 @@
   justify-content: space-between;
 }
 
-nav {
-  /* flex-direction: row; */
-}
 nav ul {
   list-style: none;
   display: flex;
 }
 
-.headerList a {
-  text-decoration: none;
-  margin-left: 40px;
-  color: white;
-  font-size: 20px;
-}
-.activeheader a {
-  text-decoration: none;
-  margin-left: 40px;
-  font-weight: bold;
-  color: rgba(167, 146, 236, 0.9);
-  font-size: 20px;
-}
 .button {
   background-color: rgb(72, 70, 67);
   color: white;
@@ -41,103 +25,8 @@ nav ul {
   border-color: aliceblue;
   z-index: 101;
 }
-.drawerStyle {
-  /* background-color: green; i found  */
-  font-size: 24px;
-  color: white;
-  margin-top: 90px;
-}
-.drawerItem {
-  margin-top: 30px;
-}
 
-/* footer {
-  background-color: black;
-  padding: 30px;
-  margin-bottom: 0;
-  color: white;
-  font-size: 24;
-} */
-
-* {
-  margin: 0;
-  box-sizing: border-box;
-}
-
-/* ---------------- Navbar and burger menu ------------------ */
-nav {
-  width: 100%;
-  height: 5em;
-  background-color: rgb(65, 68, 92);
-  display: flex;
-  justify-content: flex-start;
-  padding: 1em;
-}
-
-.burger-menu {
-  height: 100%;
-  width: 4em;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.burger-bar {
-  width: 4em;
-  height: 0.5em;
-  background-color: rgb(0, 183, 255);
-  border-radius: 0.5em;
-}
-
-.menu {
-  width: 20%;
-  height: 100vh;
-  background-color: rgb(154, 181, 240);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-/* ------------- sliding menu ------------------ */
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: inherit;
-}
-
-/* ----- animations--------- */
-/* clicked */
-.burger-bar.clicked:nth-child(1) {
-  transform: rotate(45deg) translate(0.75em, 1.25em);
-  transition: ease-out 0.5s;
-}
-
-.burger-bar.clicked:nth-child(2) {
-  transform: scale(0.1);
-  transition: ease-out 0.5s;
-}
-
-.burger-bar.clicked:nth-child(3) {
-  transform: rotate(135deg) translate(-0.5em, 1em);
-  transition: ease-out 0.5s;
-}
-
-/* unclicked */
-.burger-bar.unclicked {
-  transform: rotate(0) translate(0);
-  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
-}
-.drawerPaper {
-  background-color: lightgray;
-  width: 250px;
-  margin-top: 80px;
-}
-/* ProfileComponent.css */
+/* ----------Profile-------- */
 .profile-container {
   position: relative;
 }
@@ -174,11 +63,13 @@ nav {
   border-radius: 3px;
   cursor: pointer;
 }
+/* ----------header-------- */
 .header {
   /* width: 100%;
   height: 100px; */
   background-color: aquamarine;
 }
+/* ----------footer-------- */
 .footer {
   background-color: #333;
   /* color: #fff; */
@@ -188,10 +79,12 @@ nav {
   bottom: 0;
   width: 100%;
 }
+/* ----------Home-------- */
 .pagecontainer {
   height: 150vh;
   background-color: rgb(98, 185, 160);
 }
+/* ----------signin/up/fogerpassword-------- */
 .loginContainer {
   height: 100vh;
   display: flex;
@@ -209,6 +102,7 @@ nav {
   flex-direction: column;
   align-items: center;
 }
+/* ----------HomeContent-------- */
 .cardBody {
   margin-bottom: 300px;
 }
@@ -238,6 +132,7 @@ nav {
   width: 75px;
   height: 40px;
 }
+/* ----------MostPopular-------- */
 .listbody {
   display: flex;
   flex-direction: column;
@@ -278,9 +173,7 @@ nav {
   height: 43px;
   /* margin-right: 50px; */
 }
-/* .gametitle {
-  margin-left: 20px;
-} */
+
 .link {
   text-decoration: none;
   color: black;
@@ -326,36 +219,7 @@ nav {
 .buttonL:hover {
   background-color: #0056b3;
 }
-.buttonG {
-  margin-left: 5px;
-  margin-top: 5px;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #645f92;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.buttonG:hover {
-  background-color: #0056b3;
-}
-.buttonA {
-  margin-left: 5px;
-  margin-top: 5px;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #340bec;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.buttonA:hover {
-  background-color: #0056b3;
-}
+/* ----------GameDetail-------- */
 .detailed {
   display: flex;
   justify-content: center;
@@ -403,21 +267,88 @@ nav {
   margin-left: 10px;
 }
 
-.arrowbuttonright {
-  display: inline-block;
-  padding: 10px 20px;
-  text-align: center;
+/* ----------------Toolbar ------------------ */
+.toolbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.logo {
+  height: 50px;
+}
+
+.search-icon {
+  height: 20px;
+}
+
+.profile-container {
+  margin-left: auto;
+}
+/* ----------------menu ------------------ */
+.burger-menu {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.burger-bar {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.clicked:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.clicked:nth-child(2) {
+  opacity: 0;
+}
+
+.clicked:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* unclicked */
+.burger-bar.unclicked {
+  transform: rotate(0) translate(0);
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+.drawerPaper {
+  width: 250px;
+  margin-top: 80px;
+}
+.drawer-content {
+  padding: 20px;
+}
+
+.drawer-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.drawer-content li {
+  margin-bottom: 10px;
+}
+
+.drawer-content a {
   text-decoration: none;
+  color: #333;
   font-weight: bold;
   font-size: 16px;
-  border: 1px solid #000; /* Add your desired border styles */
-  border-radius: 5px;
-  margin: 10px;
-  background-color: #ffc107; /* Change the background color */
-  color: #fff; /* Change the text color */
-  margin-right: 10px;
 }
-.arrow {
-  font-size: 24px; /* Adjust the font size as needed */
-  color: #007bff; /* Define the color of the arrow */
+
+.drawer-content a:hover {
+  color: #007bff;
 }

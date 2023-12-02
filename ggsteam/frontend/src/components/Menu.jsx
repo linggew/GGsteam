@@ -26,7 +26,6 @@ const Menu = () => {
   return (
     <div>
       <div className="burger-menu" onClick={updateMenu}>
-        {/* burger_bar */}
         <div className={burger_class}></div>
         <div className={burger_class}></div>
         <div className={burger_class}></div>
@@ -40,11 +39,16 @@ const Menu = () => {
           className: 'drawerPaper',
         }}>
         <div className="drawer-content">
-          {/* Navigation links */}
           <nav>
             <ul style={{ display: 'flex', flexDirection: 'column' }}>
               <li>
                 <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="/favorite">Favorite List</Link>
+              </li>
+              <li>
+                <Link to="/shopcart">Shop Cart</Link>
               </li>
               <li>
                 <Link to="/help">Help</Link>

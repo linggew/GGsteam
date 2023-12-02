@@ -9,7 +9,6 @@ function GameDetail() {
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
   useEffect(() => {
-    // console.log('+++++++++++++:  ' + currentPage)
     const fetchData = async () => {
       try {
         const res = await Axios.get(config.apiUrl + `/api/games/${id}`, {})

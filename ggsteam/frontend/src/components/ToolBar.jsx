@@ -1,15 +1,15 @@
-import { Link, useResolvedPath, useMatch } from 'react-router-dom'
 import '../App.css'
-import { useState } from 'react'
-import { Menu, Profile } from './'
+import { Menu, Profile, SearchBar } from './'
 
 export default function ToolBar() {
   return (
-    <nav>
+    <nav className="toolbar-container">
       <Menu />
-      <img src={require('../assets/logo.jpg')} alt="logo" />
-      <img src={require('../assets/search.png')} alt="search" />
-      <Profile />
+      <img className="logo" src={require('../assets/logo.jpg')} alt="logo" />
+      <SearchBar />
+      <div className="profile-container">
+        <Profile />
+      </div>
     </nav>
   )
 }
