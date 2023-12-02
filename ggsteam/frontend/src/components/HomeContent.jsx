@@ -2,18 +2,76 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import '../App.css'
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import config from '../config'
 const HomeContent = () => {
-  const [gameList, setGameList] = useState([])
-
+  const [popularGame, setPopularGame] = useState([])
+  const [mostPlayGame, setMostPlayGame] = useState([])
+  const [bestDealGame, setBestDealGame] = useState([])
+  const [popularFreeGame, setPopularFreeGame] = useState([])
+  const [mostOwnedGame, setMostOwnedGame] = useState([])
+  const [mostReviewedGame, setMostReviewedGame] = useState([])
   const getGames = () => {
-    Axios.get(config.apiUrl + '/api/games', {}).then((res) => {
-      console.log(res.data)
-      setGameList(res.data)
-    })
+    // Fetch popular games
+    Axios.get(config.apiUrl + '/api/most-popular/most-viewd1')
+      .then((res) => {
+        console.log('Popular Games:', res.data)
+        setPopularGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching popular games:', error)
+      })
+
+    // Fetch most played games
+    Axios.get(config.apiUrl + '/api/most2/most-viewd2')
+      .then((res) => {
+        console.log('Most Played Games:', res.data)
+        setMostPlayGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching most played games:', error)
+      })
+
+    // Fetch best deal games
+    Axios.get(config.apiUrl + '/api/most3/most-viewd3')
+      .then((res) => {
+        console.log('Best Deal Games:', res.data)
+        setBestDealGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching best deal games:', error)
+      })
+
+    // Fetch popular free games
+    Axios.get(config.apiUrl + '/api/most4/most-viewd4')
+      .then((res) => {
+        console.log('Popular Free Games:', res.data)
+        setPopularFreeGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching popular free games:', error)
+      })
+
+    // Fetch most owned games
+    Axios.get(config.apiUrl + '/api/most5/most-viewd5')
+      .then((res) => {
+        console.log('Most Owned Games:', res.data)
+        setMostOwnedGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching most owned games:', error)
+      })
+
+    // Fetch most reviewed games
+    Axios.get(config.apiUrl + '/api/most6/most-viewd6')
+      .then((res) => {
+        console.log('Most Reviewed Games:', res.data)
+        setMostReviewedGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching most reviewed games:', error)
+      })
   }
+
   useEffect(() => {
     getGames()
   }, [])
@@ -31,7 +89,7 @@ const HomeContent = () => {
               </div>
             </Link>
 
-            {gameList.map((game) => {
+            {popularGame.map((game) => {
               return (
                 <div className="card">
                   <img
@@ -51,7 +109,7 @@ const HomeContent = () => {
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
-            {gameList.map((game) => {
+            {mostPlayGame.map((game) => {
               return (
                 <div className="card">
                   <img
@@ -71,7 +129,7 @@ const HomeContent = () => {
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
-            {gameList.map((game) => {
+            {bestDealGame.map((game) => {
               return (
                 <div className="card">
                   <img
@@ -94,7 +152,7 @@ const HomeContent = () => {
               </div>
             </Link>
 
-            {gameList.map((game) => {
+            {popularFreeGame.map((game) => {
               return (
                 <div className="card">
                   <img
@@ -114,7 +172,7 @@ const HomeContent = () => {
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
-            {gameList.map((game) => {
+            {mostOwnedGame.map((game) => {
               return (
                 <div className="card">
                   <img
@@ -134,7 +192,7 @@ const HomeContent = () => {
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
-            {gameList.map((game) => {
+            {mostReviewedGame.map((game) => {
               return (
                 <div className="card">
                   <img

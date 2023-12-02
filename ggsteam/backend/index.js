@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
 })
 
 app.get("/api/games", async (req, res) => {
-  const query = "SELECT query_id, QueryName, HeaderImage FROM Game LIMIT 5"
+  const query = "SELECT query_id, QueryName, HeaderImage FROM Game"
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error)
@@ -64,7 +64,7 @@ app.get("/api/most-popular", async (req, res) => {
 })
 
 //most poplar top 10
-app.get("/api/games/most-viewd1", async (req, res) => {
+app.get("/api/most-popular/most-viewd1", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY RecommendationCount DESC LIMIT 10"
   pool.query(query, (error, results) => {
     if (error) {
@@ -90,7 +90,7 @@ app.get("/api/games/most2", async (req, res) => {
 })
 
 //most played top 10
-app.get("/api/games/most-viewd2", async (req, res) => {
+app.get("/api/most2/most-viewd2", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY SteamSpyOwners DESC LIMIT 10"
   pool.query(query, (error, results) => {
     if (error) {
@@ -116,7 +116,7 @@ app.get("/api/games/most3", async (req, res) => {
 })
 
 //best deal of single player top 10
-app.get("/api/games/most-viewd3", async (req, res) => {
+app.get("/api/most3/most-viewd3", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer') ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC LIMIT 10;"
   pool.query(query, (error, results) => {
     if (error) {
@@ -142,7 +142,7 @@ app.get("/api/games/most4", async (req, res) => {
 })
 
 //popular free game player top 10
-app.get("/api/games/most-viewd4", async (req, res) => {
+app.get("/api/most4/most-viewd4", async (req, res) => {
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game WHERE IsFree=1 ORDER BY RecommendationCount DESC LIMIT 10"
   pool.query(query, (error, results) => {
     if (error) {
@@ -168,7 +168,7 @@ app.get("/api/games/most5", async (req, res) => {
 })
 
 //Most Owned Paid Games with High Score top 10
-app.get("/api/games/most-viewd5", async (req, res) => {
+app.get("/api/most5/most-viewd5", async (req, res) => {
   const query = "SELECT g.query_id, g.QueryName, g.HeaderImage FROM Game g LEFT JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 ON g.query_id = o1.query_id WHERE g.Metacritic > 70 and IsFree = False ORDER BY o1.num_player LIMIT 10;"
   pool.query(query, (error, results) => {
     if (error) {
@@ -194,7 +194,7 @@ app.get("/api/games/most6", async (req, res) => {
 })
 
 //most reviewed games top 10
-app.get("/api/games/most-viewd6", async (req, res) => {
+app.get("/api/most6/most-viewd6", async (req, res) => {
   const query = "SELECT g2.query_id, g2.QueryName, g2.HeaderImage FROM Game g2 JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1 USING(query_id) ORDER BY countr DESC LIMIT 10"
   pool.query(query, (error, results) => {
     if (error) {
@@ -295,7 +295,7 @@ app.get("/api/wishlist/:id", async (req, res) => {
 //add game to user wishlist /api/wishlist/addgame?user_id=1&query_id=2
 app.get("/api/wishlist/addgame", async (req, res) => {
   const query = "INSERT INTO UserWishlist VALUES(?,?)"
-  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+  pool.query(query, [req.query.user_id, req.query.query_id], (error, results) => {
     if (error) {
       console.error("Database query error:", error)
       res.status(500).send("Database error")
@@ -308,7 +308,7 @@ app.get("/api/wishlist/addgame", async (req, res) => {
 //delete game from user wishlist /api/wishlist/removegame?user_id=1&query_id=2
 app.get("/api/wishlist/removegame", async (req, res) => {
   const query = "DELETE FROM UserWishlist WHERE user_id=? AND query_id=?;"
-  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+  pool.query(query, [req.query.user_id, req.query.query_id], (error, results) => {
     if (error) {
       console.error("Database query error:", error)
       res.status(500).send("Database error")
@@ -335,7 +335,7 @@ app.get("/api/ownedlist/:id", async (req, res) => {
 //add game to user ownedlist /api/ownedlist/addgame?user_id=1&query_id=2
 app.get("/api/ownedlist/addgame", async (req, res) => {
   const query = "INSERT INTO GameOwnedUser VALUES(?,?)"
-  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+  pool.query(query, [req.query.user_id, req.query.query_id], (error, results) => {
     if (error) {
       console.error("Database query error:", error)
       res.status(500).send("Database error")
@@ -348,7 +348,7 @@ app.get("/api/ownedlist/addgame", async (req, res) => {
 //delete game from user ownedlist /api/ownedlist/removegame?user_id=1&query_id=2
 app.get("/api/ownedlist/removegame", async (req, res) => {
   const query = "DELETE FROM GameOwnedUser WHERE user_id=? AND query_id=?;"
-  pool.query(query, [req.query.user_id,req.query.query_id], (error, results) => {
+  pool.query(query, [req.query.user_id, req.query.query_id], (error, results) => {
     if (error) {
       console.error("Database query error:", error)
       res.status(500).send("Database error")
