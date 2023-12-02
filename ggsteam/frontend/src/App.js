@@ -11,7 +11,7 @@ function App () {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/favorite" element={<FavoriteList />} />
         <Route path="/shopcart" element={<ShopCart />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/help" element={<Help />} />
         <Route path="/about" element={<About />} />
         <Route path="/most-popular" element={<MostPopular />} />
