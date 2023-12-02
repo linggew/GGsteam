@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import '../App.css';
-import config from '../config';
+import React, { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import '../App.css'
+import config from '../config'
 
-const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+const SignIn = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     try {
       // Make an API call to your backend
-      const response = await axios.get(config.apiUrl+'/api/login', {
-        params: { username, password }
-      });
+      const response = await axios.get(config.apiUrl + '/api/login', {
+        params: { username, password },
+      })
 
       // Check if login is successful based on the response
       if (response.data && response.data.message === 'Login successful') {
         // Redirect to the dashboard on successful login
-        navigate('/home');
+        navigate('/home')
       } else {
         // Handle failed login
-        alert('Invalid username or password');
+        alert('Invalid username or password')
       }
     } catch (error) {
       // Handle any errors during the API call
-      console.error('Login error:', error);
-      alert('Login failed. Please try again.');
+      console.error('Login error:', error)
+      alert('Login failed. Please try again.')
     }
-  };
+  }
 
   return (
     <div className="loginContainer">
@@ -62,7 +62,7 @@ const LoginPage = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default SignIn

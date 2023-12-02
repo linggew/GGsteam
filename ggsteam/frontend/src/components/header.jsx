@@ -1,10 +1,10 @@
 import React from 'react'
-import BurgerMenu from './Burger'
+import { Menu } from './'
 import '../App.css'
 export default function Header() {
   return (
     <div className="header">
-      <BurgerMenu />
+      <Menu />
     </div>
   )
 }

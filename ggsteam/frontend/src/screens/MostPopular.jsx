@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-// import PokemonSearch from './searchBar'
 import { Link } from 'react-router-dom'
-// import SortBar from './sortBar'
 import Axios from 'axios'
 import config from '../config'
 import '../App.css'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import { Header, Footer } from '../components'
 
 function MostPopular() {
   const [gameList, setGameList] = useState([])

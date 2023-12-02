@@ -1,10 +1,9 @@
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import config from '../config'
 import '../App.css'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import { Header, Footer } from '../components'
 function GameDetail() {
   const [game, setGame] = useState([])
   const { id } = useParams()

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import '../App.css'
 
-const ProfileComponent = () => {
+const Profile = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false)
 
   const toggleDropdown = () => {
@@ -34,4 +34,4 @@ const ProfileComponent = () => {
   )
 }
 
-export default ProfileComponent
+export default Profile

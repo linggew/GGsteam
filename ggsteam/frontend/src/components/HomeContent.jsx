@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import '../App.css'
-import { Route, Routes, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRocket, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import config from '../config'
-const MyComponent = () => {
+const HomeContent = () => {
   const [gameList, setGameList] = useState([])
 
   const getGames = () => {
@@ -20,11 +20,8 @@ const MyComponent = () => {
 
   return (
     <div className="cardBody">
-      <h1> CRUD APPLICATIONS</h1>
+      <h1> Game List</h1>
       <div className="form">
-        <label> Game Lists:</label>
-
-        {/* <button onClick={getGames}> Get Games </button> */}
         <div className="cardBox">
           <div className="cardContainer">
             <Link to="/most-popular">
@@ -37,6 +34,29 @@ const MyComponent = () => {
               </div>
             </Link>
 
+            {gameList.map((game) => {
+              return (
+                <div className="card">
+                  <img
+                    className="gameImg"
+                    src={game.HeaderImage}
+                    alt={game.QueryName}
+                  />
+                  <p> {game.QueryName} </p>
+                </div>
+              )
+            })}
+          </div>
+          <div className="cardContainer">
+            <Link to="/most-popular">
+              <div className="containerTitle">
+                <h1>most popular game</h1>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+                />{' '}
+              </div>
+            </Link>
             {gameList.map((game) => {
               return (
                 <div className="card">
@@ -85,6 +105,7 @@ const MyComponent = () => {
                 />{' '}
               </div>
             </Link>
+
             {gameList.map((game) => {
               return (
                 <div className="card">
@@ -93,7 +114,7 @@ const MyComponent = () => {
                     src={game.HeaderImage}
                     alt={game.QueryName}
                   />
-                  <p>{game.QueryName} </p>
+                  <p> {game.QueryName} </p>
                 </div>
               )
             })}
@@ -116,15 +137,39 @@ const MyComponent = () => {
                     src={game.HeaderImage}
                     alt={game.QueryName}
                   />
-                  <p>{game.QueryName} </p>
+                  <p> {game.QueryName} </p>
+                </div>
+              )
+            })}
+          </div>
+          <div className="cardContainer">
+            <Link to="/most-popular">
+              <div className="containerTitle">
+                <h1>most popular game</h1>
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  style={{ marginLeft: '20px', transform: 'translateY(4px)' }}
+                />{' '}
+              </div>
+            </Link>
+            {gameList.map((game) => {
+              return (
+                <div className="card">
+                  <img
+                    className="gameImg"
+                    src={game.HeaderImage}
+                    alt={game.QueryName}
+                  />
+                  <p> {game.QueryName} </p>
                 </div>
               )
             })}
           </div>
         </div>
       </div>
+      <h1> Guess You Like</h1>
     </div>
   )
 }
 
-export default MyComponent
+export default HomeContent

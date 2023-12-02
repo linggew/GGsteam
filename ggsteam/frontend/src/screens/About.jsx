@@ -1,7 +1,5 @@
 import React from 'react'
-import Header from '../components/header'
-import Footer from '../components/footer'
-
+import { Header, Footer } from '../components'
 function About() {
   return (
     <div>

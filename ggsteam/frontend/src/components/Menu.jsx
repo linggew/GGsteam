@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Drawer from '@mui/material/Drawer'
-import { Route, Routes, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../App.css'
 
-const BurgerMenu = () => {
+const Menu = () => {
   // to change burger classes
   const [burger_class, setBurgerClass] = useState('burger-bar unclicked')
   const [isMenuClicked, setIsMenuClicked] = useState(false)
@@ -60,4 +60,4 @@ const BurgerMenu = () => {
   )
 }
 
-export default BurgerMenu
+export default Menu
