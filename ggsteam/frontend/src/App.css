@@ -397,3 +397,7 @@ nav ul {
   font-size: 18px;
   color: #e9e3e3;
 }
+.searchlist {
+  display: flex;
+  flex-direction: column;
+}

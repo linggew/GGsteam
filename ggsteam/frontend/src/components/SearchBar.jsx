@@ -4,7 +4,7 @@ import Axios from 'axios'
 import '../App.css'
 import config from '../config'
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = () => {
   const [gameList, setGameList] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -21,21 +21,28 @@ const SearchBar = ({ onSearch }) => {
     }
 
     fetchData()
-  }, [searchTerm])
+  }, [])
 
   const handleInputChange = (event) => {
-    setSearchTerm(event.target.value)
+    const term = event.target.value
+    setSearchTerm(term)
+
+    // Update filteredGame based on the search term
+    if (term.trim() === '') {
+      // If search term is empty, don't display any games
+      setFilteredGame([])
+    } else {
+      // Filter games based on the search term
+      const filtered = gameList.filter((game) =>
+        game.QueryName.toLowerCase().includes(term.toLowerCase())
+      )
+      const limitedFiltered = filtered.slice(0, 10)
+      setFilteredGame(limitedFiltered)
+    }
   }
 
   const handleSearch = () => {
-    console.log('Search term:', searchTerm)
-    setSearchTerm('')
-    setIsModalVisible(true)
-    const filtered = gameList.filter((game) =>
-      game.QueryName.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    const limitedFiltered = filtered.slice(0, 10)
-    setFilteredGame(limitedFiltered)
+    alert('Button Clicked!')
   }
 
   const openModal = () => {
@@ -65,13 +72,13 @@ const SearchBar = ({ onSearch }) => {
               &times;
             </span>
             <div>
-              <ul className="listcontainer">
+              <ul className="searchlist">
                 {filteredGame.map((game, index) => (
-                  <Link to={`/games/${game.query_id}`} className="link">
-                    <li
-                      key={index}
-                      className="listbox"
-                      style={{ cursor: 'pointer' }}>
+                  <Link
+                    to={`/games/${game.query_id}`}
+                    className="link"
+                    key={index}>
+                    <li className="listbox" style={{ cursor: 'pointer' }}>
                       <img
                         className="listimg"
                         src={game.HeaderImage}
@@ -81,6 +88,7 @@ const SearchBar = ({ onSearch }) => {
                     </li>
                   </Link>
                 ))}
+                <p>Click Search Button to see more</p>
               </ul>
             </div>
           </div>
