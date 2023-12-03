@@ -432,3 +432,27 @@ h2 {
   display: flex;
   flex-direction: column;
 }
+/* ++++++++++++++++++About++++++++++++++++ */
+.aboutContainer {
+  background-image: url('./assets/aboutbk.jpg');
+  background-size: cover;
+  height: 100vh;
+}
+.aboutbody {
+  margin-top: 80px;
+}
+p {
+  color: #ccc;
+}
+/* ++++++++++++++++++Help++++++++++++++++ */
+.helpContainer {
+  background-image: url('./assets/helpbk.jpg');
+  background-size: cover;
+  height: 100vh;
+}
+.helpbody {
+  margin-top: 80px;
+}
+.aboutcolor {
+  color: #0d0d0d;
+}

@@ -3,15 +3,18 @@ import '../App.css'
 import { Header, Footer } from '../components'
 function Help() {
   return (
-    <div>
+    <div className="helpContainer">
       <Header />
-      <h1>Help Page</h1>
-      <p>Basic Information:</p>
-      <p>TeamName FightOne </p>
-      <p>Captain: Jialu Xu (jialu5@illinois.edu)</p>
-      <p>Member1 Tianhao Chen (tc30@illinois.edu)</p>
-      <p>Member2 Shenghao Che (linggew2@illinois.edu)</p>
-      <Footer />
+      <div className="helpbody">
+        <h1 className="aboutcolor">Help Page</h1>
+        <p className="aboutcolor">Basic Information:</p>
+        <p className="aboutcolor">TeamName FightOne </p>
+        <p className="aboutcolor">Captain: Jialu Xu (jialu5@illinois.edu)</p>
+        <p className="aboutcolor">Member1 Tianhao Chen (tc30@illinois.edu)</p>
+        <p className="aboutcolor">Member2 Shenghao Cheng (sc71@illinois.edu)</p>
+        <p className="aboutcolor">Member3 Lingge Wu (linggew2@illinois.edu)</p>
+        <Footer />
+      </div>
     </div>
   )
 }
