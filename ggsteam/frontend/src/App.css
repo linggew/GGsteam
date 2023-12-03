@@ -64,7 +64,13 @@ nav ul {
   cursor: pointer;
 }
 /* ----------header-------- */
-
+.header {
+  height: 80px;
+  background-color: #333;
+  position: fixed;
+  margin-top: 0;
+  width: 100%;
+}
 /* ----------footer-------- */
 .footerstyle {
   position: fixed;
@@ -342,7 +348,7 @@ h2 {
 }
 
 .clicked:nth-child(1) {
-  transform: rotate(-45deg) translate(-5px, 6px);
+  transform: rotate(-45deg) translate(-12px, 12px);
 }
 
 .clicked:nth-child(2) {
@@ -350,7 +356,7 @@ h2 {
 }
 
 .clicked:nth-child(3) {
-  transform: rotate(45deg) translate(-5px, -6px);
+  transform: rotate(45deg) translate(-10px, -8px);
 }
 
 /* unclicked */
