@@ -9,7 +9,7 @@ CREATE DEFINER=`root`@`%` TRIGGER `before_review_insert` BEFORE INSERT ON `Revie
 
     -- If the combination exists, insert the review with a random review_id
     IF user_game_exists > 0 THEN
-        SET NEW.review_id = FLOOR(RAND() * 1000000);  -- Adjust the range as per your requirement
+        SET NEW.review_id = FLOOR(RAND() * 1000000);
     ELSE
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Cannot insert review: user does not own this game.';
