@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`%` PROCEDURE `RecommendGames`(IN user_id INT)
+CREATE DEFINER=`root`@`%` PROCEDURE `RecommendGames`(IN uid INT)
 BEGIN
     -- Declare variables
     DECLARE max_price FLOAT;
@@ -10,7 +10,7 @@ BEGIN
     -- Determine the maximum price from owned games
     SELECT MAX(PriceFinal) INTO max_price
     FROM Game
-    WHERE query_id IN (SELECT query_id FROM GameOwnedUser WHERE user_id = user_id);
+    WHERE query_id IN (SELECT query_id FROM GameOwnedUser WHERE user_id = uid);
     
     -- Create a temporary table to store category proportions
     CREATE TEMPORARY TABLE IF NOT EXISTS TempCategoryProportions (
@@ -22,18 +22,18 @@ BEGIN
     INSERT INTO TempCategoryProportions (category_id, proportion)
     SELECT gc.category_id, COUNT(*)
     FROM GameCategory gc
-    JOIN (SELECT query_id FROM GameOwnedUser WHERE user_id = user_id
+    JOIN (SELECT query_id FROM GameOwnedUser WHERE user_id = uid
           UNION
-          SELECT query_id FROM UserWishlist WHERE user_id = user_id) AS user_games
+          SELECT query_id FROM UserWishlist WHERE user_id = uid) AS user_games
     ON gc.query_id = user_games.query_id
     GROUP BY gc.category_id;
     
     SELECT category_id, proportion/total.total_count
     FROM TempCategoryProportions, 
     (SELECT COUNT(*) as total_count
-          FROM (SELECT query_id FROM GameOwnedUser WHERE user_id = user_id
+          FROM (SELECT query_id FROM GameOwnedUser WHERE user_id = uid
                 UNION
-                SELECT query_id FROM UserWishlist WHERE user_id = user_id) AS total_games) AS total
+                SELECT query_id FROM UserWishlist WHERE user_id = uid) AS total_games) AS total
     ORDER BY proportion DESC
     LIMIT 3; -- Select only the top three categories
 
@@ -59,9 +59,9 @@ BEGIN
         WHERE g.PriceFinal <= max_price
         AND g.Metacritic >= 75
         AND g.query_id not in 
-				(SELECT query_id FROM GameOwnedUser WHERE user_id = user_id
+				(SELECT query_id FROM GameOwnedUser WHERE user_id = uid
                 UNION
-                SELECT query_id FROM UserWishlist WHERE user_id = user_id)
+                SELECT query_id FROM UserWishlist WHERE user_id = uid)
         ORDER BY g.RecommendationCount DESC, g.SteamSpyPlayersEstimate DESC
         LIMIT 5; -- Limit per category for balance
 
