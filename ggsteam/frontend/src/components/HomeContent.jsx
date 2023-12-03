@@ -84,61 +84,67 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-popular" className="linkStyles">
               <div className="containerTitle">
-                <h1>Most popular game</h1>
+                <h2 className="title">Most popular game</h2>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
 
             {popularGame.map((game) => {
               return (
-                <div className="card">
-                  <img
-                    className="gameImg"
-                    src={game.HeaderImage}
-                    alt={game.QueryName}
-                  />
-                  <p> {game.QueryName} </p>
-                </div>
+                <Link to={`/games/${game.query_id}`} className="homeGameLink">
+                  <div className="card">
+                    <img
+                      className="gameImg"
+                      src={game.HeaderImage}
+                      alt={game.QueryName}
+                    />
+                    <p className="gameName"> {game.QueryName} </p>
+                  </div>
+                </Link>
               )
             })}
           </div>
           <div className="cardContainer">
             <Link to="/most-played" className="linkStyles">
               <div className="containerTitle">
-                <h1>Most played game</h1>
+                <h2>Most played game</h2>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {mostPlayGame.map((game) => {
               return (
-                <div className="card">
-                  <img
-                    className="gameImg"
-                    src={game.HeaderImage}
-                    alt={game.QueryName}
-                  />
-                  <p> {game.QueryName} </p>
-                </div>
+                <Link to={`/games/${game.query_id}`} className="homeGameLink">
+                  <div className="card">
+                    <img
+                      className="gameImg"
+                      src={game.HeaderImage}
+                      alt={game.QueryName}
+                    />
+                    <p className="gameName"> {game.QueryName} </p>
+                  </div>
+                </Link>
               )
             })}
           </div>
           <div className="cardContainer">
             <Link to="/most-deal" className="linkStyles">
               <div className="containerTitle">
-                <h1>Best deal of single player</h1>
+                <h2>Best deal of single player</h2>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {bestDealGame.map((game) => {
               return (
-                <div className="card">
-                  <img
-                    className="gameImg"
-                    src={game.HeaderImage}
-                    alt={game.QueryName}
-                  />
-                  <p> {game.QueryName} </p>
-                </div>
+                <Link to={`/games/${game.query_id}`} className="homeGameLink">
+                  <div className="card">
+                    <img
+                      className="gameImg"
+                      src={game.HeaderImage}
+                      alt={game.QueryName}
+                    />
+                    <p className="gameName"> {game.QueryName} </p>
+                  </div>
+                </Link>
               )
             })}
           </div>
@@ -147,61 +153,67 @@ const HomeContent = () => {
           <div className="cardContainer">
             <Link to="/most-free" className="linkStyles">
               <div className="containerTitle">
-                <h1>Popular free game</h1>
+                <h2>Popular free game</h2>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
 
             {popularFreeGame.map((game) => {
               return (
-                <div className="card">
-                  <img
-                    className="gameImg"
-                    src={game.HeaderImage}
-                    alt={game.QueryName}
-                  />
-                  <p> {game.QueryName} </p>
-                </div>
+                <Link to={`/games/${game.query_id}`} className="homeGameLink">
+                  <div className="card">
+                    <img
+                      className="gameImg"
+                      src={game.HeaderImage}
+                      alt={game.QueryName}
+                    />
+                    <p className="gameName"> {game.QueryName} </p>
+                  </div>
+                </Link>
               )
             })}
           </div>
           <div className="cardContainer">
             <Link to="/most-owned" className="linkStyles">
               <div className="containerTitle">
-                <h1>Most Owned Paid Games</h1>
+                <h2>Most Owned Paid Games</h2>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {mostOwnedGame.map((game) => {
               return (
-                <div className="card">
-                  <img
-                    className="gameImg"
-                    src={game.HeaderImage}
-                    alt={game.QueryName}
-                  />
-                  <p> {game.QueryName} </p>
-                </div>
+                <Link to={`/games/${game.query_id}`} className="homeGameLink">
+                  <div className="card">
+                    <img
+                      className="gameImg"
+                      src={game.HeaderImage}
+                      alt={game.QueryName}
+                    />
+                    <p className="gameName"> {game.QueryName} </p>
+                  </div>
+                </Link>
               )
             })}
           </div>
           <div className="cardContainer">
             <Link to="/most-reviewed" className="linkStyles">
               <div className="containerTitle">
-                <h1>Most reviewed games </h1>
+                <h2>Most reviewed games </h2>
                 <span className="arrow">&rarr;</span>
               </div>
             </Link>
             {mostReviewedGame.map((game) => {
               return (
-                <div className="card">
-                  <img
-                    className="gameImg"
-                    src={game.HeaderImage}
-                    alt={game.QueryName}
-                  />
-                  <p> {game.QueryName} </p>
-                </div>
+                <Link to={`/games/${game.query_id}`} className="homeGameLink">
+                  <div className="card">
+                    <img
+                      className="gameImg"
+                      src={game.HeaderImage}
+                      alt={game.QueryName}
+                    />
+                    <p className="gameName"> {game.QueryName} </p>
+                  </div>
+                </Link>
               )
             })}
           </div>
