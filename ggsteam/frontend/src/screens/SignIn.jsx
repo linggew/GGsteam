@@ -22,7 +22,12 @@ const SignIn = () => {
         //   '+++++++++++++++++++++++' + JSON.stringify(response.data, null, 2)
         // )
         // Redirect to the dashboard on successful login
-        navigate(`/?id=${response.data.user.user_id}`)
+        // navigate(`/?id=${response.data.user.user_id}`)
+        // Save the user ID in local storage
+        localStorage.setItem('userId', response.data.user.user_id)
+
+        // Redirect to the dashboard on successful login
+        navigate('/')
       } else {
         // Handle failed login
         alert('Invalid username or password')
