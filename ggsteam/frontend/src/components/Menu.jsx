@@ -37,6 +37,9 @@ const Menu = () => {
         onClose={updateMenu}
         PaperProps={{
           className: 'drawerPaper',
+          style: {
+            backgroundColor: 'rgba(51, 51, 51, 0.8)',
+          },
         }}>
         <div className="drawer-content">
           <nav>
