@@ -4,7 +4,7 @@ import axios from 'axios'
 import config from '../config'
 import { useLocation } from 'react-router-dom'
 import '../App.css'
-import { Header, Footer, GameFilter } from '../components'
+import { Header, Footer } from '../components'
 function SearchList() {
   const [gameList, setGameList] = useState([])
   const [loading, setLoading] = useState(true)

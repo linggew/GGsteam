@@ -4,12 +4,15 @@ import { useParams } from 'react-router-dom'
 import config from '../config'
 import '../App.css'
 import { Header, Footer } from '../components'
+import { useGameContext } from '../utils/GameContext'
 
 function GameDetail() {
   const [game, setGame] = useState([])
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
+  const { userid } = useGameContext()
   useEffect(() => {
+    // console.log('+++++++++++userid' + userid)
     const fetchData = async () => {
       try {
         const res = await Axios.get(config.apiUrl + `/api/games/${id}`, {})

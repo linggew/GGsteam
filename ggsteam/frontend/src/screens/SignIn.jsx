@@ -18,8 +18,11 @@ const SignIn = () => {
 
       // Check if login is successful based on the response
       if (response.data && response.data.message === 'Login successful') {
+        // console.log(
+        //   '+++++++++++++++++++++++' + JSON.stringify(response.data, null, 2)
+        // )
         // Redirect to the dashboard on successful login
-        navigate('/home')
+        navigate(`/?id=${response.data.user.user_id}`)
       } else {
         // Handle failed login
         alert('Invalid username or password')
