@@ -10,6 +10,8 @@ const HomeContent = () => {
   const [popularFreeGame, setPopularFreeGame] = useState([])
   const [mostOwnedGame, setMostOwnedGame] = useState([])
   const [mostReviewedGame, setMostReviewedGame] = useState([])
+  const [recomendGame, setRecomendGame] = useState([])
+  const userid = localStorage.getItem('userId')
   const getGames = () => {
     // Fetch popular games
     Axios.get(config.apiUrl + '/api/most-popular/most-viewd1')
@@ -66,6 +68,14 @@ const HomeContent = () => {
       .then((res) => {
         console.log('Most Reviewed Games:', res.data)
         setMostReviewedGame(res.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching most reviewed games:', error)
+      })
+    Axios.get(config.apiUrl + `/api/recommend/${userid}`)
+      .then((res) => {
+        console.log('Most Reviewed Games:', res.data)
+        setRecomendGame(res.data)
       })
       .catch((error) => {
         console.error('Error fetching most reviewed games:', error)
@@ -220,6 +230,28 @@ const HomeContent = () => {
         </div>
       </div>
       <h1> Guess You Like</h1>
+      <div className="cardContainer">
+        {/* <Link to="/most-reviewed" className="linkStyles"> */}
+        {/* <div className="containerTitle"> */}
+        {/* <h2>Most reviewed games </h2> */}
+        {/* <span className="arrow">&rarr;</span> */}
+        {/* </div> */}
+        {/* </Link> */}
+        {recomendGame.map((game) => {
+          return (
+            <Link to={`/games/${game.query_id}`} className="homeGameLink">
+              <div className="card">
+                <img
+                  className="gameImg"
+                  src={game.HeaderImage}
+                  alt={game.QueryName}
+                />
+                <p className="gameName"> {game.QueryName} </p>
+              </div>
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }
