@@ -205,10 +205,12 @@ app.get("/api/most6/most-viewd6", async (req, res) => {
     res.json(results)
   })
 })
+
+//search 
 app.get("/api/search", async (req, res) => {
   const searchTerm = '%' + req.query.searchTerm + '%' // Add '%' for wildcard matching
   const query = "SELECT query_id, QueryName, HeaderImage FROM Game WHERE QueryName LIKE ?"
-  console.log("++++++++++++++++" + searchTerm)
+  // console.log("++++++++++++++++" + searchTerm)
   pool.query(query, [searchTerm], (error, results) => {
     if (error) {
       console.error("Database query error:", error)
