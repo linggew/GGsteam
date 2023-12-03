@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import '../App.css'
 import config from '../config'
@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [filteredGame, setFilteredGame] = useState([])
-
+  const history = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,7 +42,8 @@ const SearchBar = () => {
   }
 
   const handleSearch = () => {
-    alert('Button Clicked!')
+    // console.log('kkkkkkkkkkkkkkk' + searchTerm)
+    history(`/search-result?searchTerm=${searchTerm}`)
   }
 
   const openModal = () => {

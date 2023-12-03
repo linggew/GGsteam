@@ -2,6 +2,7 @@ import "./App.css"
 import React from "react"
 import { Route, Routes } from 'react-router-dom'
 import { MostPlayed, MostCommended, MostOwned, MostPopular, GameDetail, About, Help, Home, SignIn, SignUp, ForgotPassword, FavoriteList, ShopCart, MostReviewed, MostFree, MostDeal } from "./screens/index"
+import SearchList from "./screens/SearchList"
 function App () {
   return (
     <div className='App'>
@@ -21,6 +22,7 @@ function App () {
         <Route path="/most-deal" element={<MostDeal />} />
         <Route path="/most-played" element={<MostPlayed />} />
         <Route path="/games/:id" element={<GameDetail />} />
+        <Route path="/search-result" element={<SearchList />} />
       </Routes>
     </div>
   )
