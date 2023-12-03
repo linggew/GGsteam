@@ -477,3 +477,15 @@ app.get("/api/comment/:id", async (req, res) => {
     res.json(results)
   })
 })
+
+app.get("/api/reconmend/:id", async (req, res) => {
+  const query =
+    "CALL RecommendGames(?, @result); SELECT @result;"
+  pool.query(query, [req.params.id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+    }
+    res.json(results)
+  })
+})
