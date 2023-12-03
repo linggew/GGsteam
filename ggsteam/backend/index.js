@@ -374,3 +374,101 @@ app.get("/api/ownedlist/removegame", async (req, res) => {
     res.status(200).send("Game deleted")
   })
 })
+
+//get category
+app.get("/api/category", async (req, res) => {
+  const query = "SELECT * FROM Category;"
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.json(results)
+  })
+})
+
+//add comment (req.body with user_id, query_id, review_content)
+app.post("/api/comment/addcomment", async (req, res) =>{
+  const {user_id, query_id, review_content} = req.body
+  if (!user_id || !query_id || !review_content) {
+    return res.status(401).send('comment information are required')
+  }
+  try {
+    // Insert the new comment into the database
+    const query = 'INSERT INTO Review(user_id, query_id, review_content) VALUES(?, ?, ?)'
+    pool.query(query, [user_id, query_id, review_content], (err, result) => {
+      if (err) {
+        console.error('Database query error:', err)
+        return res.status(500).send('Error: failed to add new comment')
+      }
+      res.status(200).send('Comment added')
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Server error')
+  }
+})
+
+
+//delete comment /api/comment/removecomment?user_id=1&query_id=2
+app.get("/api/comment/removecomment", async (req, res) => {
+  const query = "DELETE FROM Review WHERE user_id=? AND query_id=?;"
+  pool.query(query, [req.query.user_id, req.query.query_id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.status(200).send("Review deleted")
+  })
+})
+
+//delete comment by review_id /api/comment/removecomment/:id
+app.get("/api/comment/removecomment/:id", async (req, res) => {
+  const query = "DELETE FROM Review WHERE review_id=?;"
+  pool.query(query, [req.query.user_id, req.query.query_id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.status(200).send("Review deleted")
+  })
+})
+
+//update query (req.body with user_id, query_id, review_content)
+app.post("/api/comment/updatecomment", async (req, res) =>{
+  const {review_id, review_content} = req.body
+  if (!review_id || !review_content) {
+    return res.status(401).send('comment information are required')
+  }
+  try {
+    // Insert the new comment into the database
+    const query = 'UPDATE Review SET review_content=? WHERE review_id=?;'
+    pool.query(query, [review_content,review_id], (err, result) => {
+      if (err) {
+        console.error('Database query error:', err)
+        return res.status(500).send('Error: failed to update comment')
+      }
+      res.status(200).send('Comment updated')
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Server error')
+  }
+})
+
+
+//get comment by gameid
+app.get("/api/comment/:id", async (req, res) =>{
+  const query = "SELECT * FROM Review WHERE query_id = ?"
+  pool.query(query, [req.params.id], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error)
+      res.status(500).send("Database error")
+      return
+    }
+    res.json(results)
+  })
+})
