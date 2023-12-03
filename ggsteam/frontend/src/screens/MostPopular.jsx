@@ -36,6 +36,7 @@ function MostPopular() {
           <p className="loading">Loading...</p>
         ) : (
           <div className="listbodyy">
+            <h1>Most Popular Game</h1>
             <div>
               <GameFilter />
             </div>

@@ -36,6 +36,7 @@ function MostReviewed() {
           <p className="loading">Loading...</p>
         ) : (
           <div className="listbodyy">
+            <h1>Most Reviewed Game</h1>
             <div>
               <GameFilter />
             </div>

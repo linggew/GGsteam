@@ -36,6 +36,7 @@ function MostPlayed() {
           <p className="loading">Loading...</p>
         ) : (
           <div className="listbodyy">
+            <h1>Most Played Single Player Game</h1>
             <div>
               <GameFilter />
             </div>

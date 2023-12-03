@@ -39,6 +39,7 @@ function MostOwned() {
             <div>
               <GameFilter />
             </div>
+            <h1>Most Owned Paid Game</h1>
             <ul className="listcontainer">
               {filteredGame.map((game, index) => (
                 <Link to={`/games/${game.query_id}`} className="link">
