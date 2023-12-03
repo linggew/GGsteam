@@ -361,9 +361,9 @@ app.post("/api/ownedlist/addgame", async (req, res) => {
 });
 
 //delete game from user ownedlist /api/ownedlist/removegame?user_id=1&query_id=2
-app.get("/api/ownedlist/removegame", async (req, res) => {
-  const query = "DELETE FROM GameOwnedUser WHERE user_id=? AND query_id=?;";
-  pool.query(query, [req.body.userid, req.body.id], (error, results) => {
+app.delete("/api/ownedlist/removegame/:userid/:id", async (req, res) => {
+  const query = "DELETE FROM GameOwnedUser WHERE user_id= ? AND query_id= ?";
+  pool.query(query, [req.params.userid, req.params.id], (error, results) => {
     if (error) {
       console.error("Database query error:", error);
       res.status(500).send("Database error");
@@ -474,18 +474,17 @@ app.get("/api/comment/:id", async (req, res) => {
       res.status(500).send("Database error");
       return;
     }
-    res.json(results)
-  })
-})
+    res.json(results);
+  });
+});
 
 app.get("/api/reconmend/:id", async (req, res) => {
-  const query =
-    "CALL RecommendGames(?);"
+  const query = "CALL RecommendGames(?, @result); SELECT @result;";
   pool.query(query, [req.params.id], (error, results) => {
     if (error) {
-      console.error("Database query error:", error)
-      res.status(500).send("Database error")
+      console.error("Database query error:", error);
+      res.status(500).send("Database error");
     }
-    res.json(results)
-  })
-})
+    res.json(results);
+  });
+});
