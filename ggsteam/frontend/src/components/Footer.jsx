@@ -1,23 +1,9 @@
 // Footer.jsx
-import React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-//comment
-const Footer = () => {
-  return (
-    <div className='footer'>
-      <AppBar position='static' color='primary'>
-        <Toolbar>
-          <Typography
-            variant='body1'
-            color='inherit'
-            // style={{ position: 'fixed' }}
-          >
-            This is the footer of my React application.
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
+import React from 'react'
+import '../App.css'
 
-export default Footer;
+const Footer = () => {
+  return <div className="footerstyle"></div>
+}
+
+export default Footer
