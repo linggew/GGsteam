@@ -258,6 +258,9 @@ h2 {
 }
 /* ----------GameDetail-------- */
 .detailed {
+  color: #000;
+}
+.detailed {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -285,6 +288,7 @@ h2 {
   font-weight: bold;
   /* margin-right: 10px; */
   margin-top: 10px;
+  color: #000;
 }
 .abilitycontent {
   margin-right: 5px;
