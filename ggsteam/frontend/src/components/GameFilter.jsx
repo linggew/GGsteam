@@ -8,22 +8,24 @@ const GameFilter = ({ onFilter }) => {
   const [price, setPrice] = useState('')
   const [isPC, setIsPC] = useState(false)
   const [gameCategory, setGameCategory] = useState([])
-  // const getGames = () => {
-  //   // Fetch popular games
-  //   Axios.get(config.apiUrl + '/api/category')
-  //     .then((res) => {
-  //       console.log('Popular Games:', res.data)
-  //       setGameCategory(res.data)
-  //       console.log('++++++++++++++++++++Category:' + res.data)
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching popular games:', error)
-  //     })
-  // }
+  const getGames = () => {
+    // Fetch popular games
+    Axios.get(config.apiUrl + '/api/category')
+      .then((res) => {
+        console.log('Popular Games:', res.data)
+        setGameCategory(res.data)
+        console.log(
+          '++++++++++++++++++++Category:' + JSON.stringify(res.data, null, 2)
+        )
+      })
+      .catch((error) => {
+        console.error('Error fetching popular games:', error)
+      })
+  }
 
-  // useEffect(() => {
-  //   getGames()
-  // }, [])
+  useEffect(() => {
+    getGames()
+  }, [])
 
   const handleFilter = () => {
     const filters = {
