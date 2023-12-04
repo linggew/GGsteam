@@ -74,8 +74,8 @@ const HomeContent = () => {
       })
     Axios.get(config.apiUrl + `/api/recommend/${userid}`)
       .then((res) => {
-        console.log('Most Reviewed Games:', res.data)
-        setRecomendGame(res.data)
+        console.log('recommend Games:', res.data)
+        setRecomendGame(res.data[1])
       })
       .catch((error) => {
         console.error('Error fetching most reviewed games:', error)
