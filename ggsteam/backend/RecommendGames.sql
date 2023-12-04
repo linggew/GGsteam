@@ -13,34 +13,22 @@ BEGIN
     WHERE query_id IN (SELECT query_id FROM GameOwnedUser WHERE user_id = uid);
     
     -- Create a temporary table to store category proportions
-    CREATE TEMPORARY TABLE IF NOT EXISTS Temp (
+    CREATE TEMPORARY TABLE IF NOT EXISTS TempCategoryProportions (
         category_id INT,
         proportion FLOAT
     );
 
     -- Calculate the category proportions for the user's owned and wishlist games
-    INSERT INTO Temp (category_id, proportion)
-    SELECT gc.category_id, COUNT(*)
+    INSERT INTO TempCategoryProportions (category_id, proportion)
+    SELECT gc.category_id, COUNT(*) as proportion
     FROM GameCategory gc
     JOIN (SELECT query_id FROM GameOwnedUser WHERE user_id = uid
           UNION
           SELECT query_id FROM UserWishlist WHERE user_id = uid) AS user_games
     ON gc.query_id = user_games.query_id
-    GROUP BY gc.category_id;
-    
-	-- Create a temporary table to store category proportions
-    CREATE TEMPORARY TABLE IF NOT EXISTS TempCategoryProportions (
-        category_id INT,
-        proportion FLOAT
-    );
-    
-    INSERT INTO TempCategoryProportions (category_id, proportion)
-    SELECT category_id, proportion
-    FROM Temp
-    ORDER BY proportion DESC
+    GROUP BY gc.category_id
+	ORDER BY proportion DESC
     LIMIT 3; -- Select only the top three categories
-    
-    DROP TEMPORARY TABLE IF EXISTS Temp;
 
     -- Create a temporary table to store the recommended games
     CREATE TEMPORARY TABLE IF NOT EXISTS TempRecommendations (
@@ -73,14 +61,14 @@ BEGIN
     END LOOP;
 
     CLOSE cur_category_cursor;
-    DROP TEMPORARY TABLE IF EXISTS TempCategoryProportions;
 
     -- Retrieve and return the recommended games
-    SELECT g.query_id, g.QueryName, g.HeaderImage
+    SELECT DISTINCT g.*
     FROM Game g
     WHERE g.query_id IN (SELECT query_id FROM TempRecommendations)
     ORDER BY g.Metacritic DESC, g.RecommendationCount DESC, g.SteamSpyPlayersEstimate DESC;
 
     -- Drop the temporary tables
+    DROP TEMPORARY TABLE IF EXISTS TempCategoryProportions;
     DROP TEMPORARY TABLE IF EXISTS TempRecommendations;
 END
