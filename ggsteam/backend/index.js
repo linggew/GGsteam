@@ -302,8 +302,44 @@ app.get("/api/most4/most-viewd4", async (req, res) => {
 
 //Most Owned Paid Games with High Score
 app.get("/api/most5", async (req, res) => {
-  const query =
-    "SELECT g.query_id, g.QueryName, g.HeaderImage FROM Game g LEFT JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 ON g.query_id = o1.query_id WHERE g.Metacritic > 70 and IsFree = False ORDER BY o1.num_player LIMIT 1000;"
+  var from = " FROM (SELECT * FROM Game g NATURAL JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 WHERE g.Metacritic > 70 and IsFree = False) finalgame"
+  var query = "SELECT finalgame.query_id, finalgame.QueryName, finalgame.HeaderImage"
+  var where = " "
+  if (req.query.categoryid != "none"){
+    from = from + " NATURAL JOIN GameCategory"
+    where = where + " category_id="+req.query.categoryid
+  }
+  if (req.query.age != "none"){
+    if(where != " "){
+      where = where + " AND RequiredAge<="+req.query.age
+    }
+    else{
+      where = where + " RequiredAge<="+req.query.age
+    }
+  }
+  if (req.query.pricelow != "none" && req.query.pricehigh != "none"){
+    if(where != " "){
+      where = where + " AND "+req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+    else{
+      where = where +" "+ req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+  }
+  if (req.query.pcscore != "none"){
+    from = from + " JOIN PC"
+    if(where != " "){
+      where = where + " AND finalgame.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+    else{
+      where = where + " finalgame.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+  }
+  if(where==" "){
+    query = query+from+" ORDER BY finalgame.num_player LIMIT 1000;"
+  }
+  else{
+    query = query+from+" WHERE"+where+" ORDER BY finalgame.num_player LIMIT 1000;"
+  }
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error)
