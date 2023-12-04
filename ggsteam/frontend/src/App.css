@@ -125,9 +125,6 @@ h2 {
   color: rgb(214, 206, 206);
 }
 .cardContainer {
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* margin-right: 20px; */
   background-color: rgba(21, 6, 72, 0.5);
   margin-left: 50px;
   margin-right: 50px;
@@ -165,6 +162,45 @@ h2 {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: medium;
   color: rgb(214, 206, 206);
+}
+.recommendcardContainer {
+  display: flex;
+  /* flex-direction: row; */
+  /* margin-right: 20px; */
+  background-color: rgba(21, 6, 72, 0.5);
+  border: 2px solid #ccc;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 90%;
+  height: 150px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+.recommendcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+  white-space: nowrap;
+  animation: scrollText 5s linear infinite;
+  transition: border 0.8s ease, background-color 0.8s ease;
+}
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.recommendcard:hover {
+  border: 2px solid #3498db;
+  background-color: #3498db;
+}
+.recommendgameImg {
+  width: 200px;
+  height: 90px;
 }
 /* ----------MostPopular-------- */
 .listbody {

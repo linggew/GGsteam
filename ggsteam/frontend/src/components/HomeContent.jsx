@@ -75,7 +75,7 @@ const HomeContent = () => {
     Axios.get(config.apiUrl + `/api/recommend/${userid}`)
       .then((res) => {
         console.log('recommend Games:', res.data)
-        setRecomendGame(res.data[1])
+        setRecomendGame(res.data[0])
       })
       .catch((error) => {
         console.error('Error fetching most reviewed games:', error)
@@ -230,19 +230,13 @@ const HomeContent = () => {
         </div>
       </div>
       <h1> Guess You Like</h1>
-      <div className="cardContainer">
-        {/* <Link to="/most-reviewed" className="linkStyles"> */}
-        {/* <div className="containerTitle"> */}
-        {/* <h2>Most reviewed games </h2> */}
-        {/* <span className="arrow">&rarr;</span> */}
-        {/* </div> */}
-        {/* </Link> */}
+      <div className="recommendcardContainer">
         {recomendGame.map((game) => {
           return (
             <Link to={`/games/${game.query_id}`} className="homeGameLink">
-              <div className="card">
+              <div className="recommendcard">
                 <img
-                  className="gameImg"
+                  className="recommendgameImg"
                   src={game.HeaderImage}
                   alt={game.QueryName}
                 />
