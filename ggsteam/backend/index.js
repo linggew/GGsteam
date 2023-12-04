@@ -366,8 +366,44 @@ app.get("/api/most5/most-viewd5", async (req, res) => {
 
 //most reviewd games
 app.get("/api/most6", async (req, res) => {
-  const query =
-    "SELECT g2.query_id, g2.QueryName, g2.HeaderImage FROM Game g2 JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1 USING(query_id) ORDER BY countr DESC;"
+  var from = " FROM (SELECT * FROM Game g2 NATURAL JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1) finalgame"
+  var query = "SELECT finalgame.query_id, finalgame.QueryName, finalgame.HeaderImage"
+  var where = " "
+  if (req.query.categoryid != "none"){
+    from = from + " NATURAL JOIN GameCategory"
+    where = where + " category_id="+req.query.categoryid
+  }
+  if (req.query.age != "none"){
+    if(where != " "){
+      where = where + " AND RequiredAge<="+req.query.age
+    }
+    else{
+      where = where + " RequiredAge<="+req.query.age
+    }
+  }
+  if (req.query.pricelow != "none" && req.query.pricehigh != "none"){
+    if(where != " "){
+      where = where + " AND "+req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+    else{
+      where = where +" "+ req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+  }
+  if (req.query.pcscore != "none"){
+    from = from + " JOIN PC"
+    if(where != " "){
+      where = where + " AND finalgame.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+    else{
+      where = where + " finalgame.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+  }
+  if(where==" "){
+    query = query+from+" ORDER BY finalgame.countr DESC;"
+  }
+  else{
+    query = query+from+" WHERE"+where+" ORDER BY finalgame.countr DESC;"
+  }
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error)
@@ -377,6 +413,7 @@ app.get("/api/most6", async (req, res) => {
     res.json(results)
   })
 })
+
 
 //most reviewed games top 10
 app.get("/api/most6/most-viewd6", async (req, res) => {
