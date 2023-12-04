@@ -36,6 +36,32 @@ function MostPlayed() {
     fetchData()
   }, [currentPage])
 
+  const handleFilter = (filter_param) => {
+    // console.log('++++++++++++++++++++++++category:' + filter_param.category)
+    // console.log('++++++++++++++++++++++++age:' + filter_param.age)
+    // console.log('++++++++++++++++++++++++min:' + filter_param.min)
+    // console.log('++++++++++++++++++++++++max:' + filter_param.max)
+    // console.log('++++++++++++++++++++++++score:' + filter_param.score)
+    const fetchFiltedData = async () => {
+      try {
+        const res = await Axios.get(config.apiUrl + '/api/most2', {
+          params: {
+            categoryid: filter_param.category,
+            age: filter_param.age,
+            pricelow: filter_param.min,
+            pricehigh: filter_param.max,
+            pcscore: filter_param.score,
+          },
+        })
+        setGameList(res.data)
+        setLoading(false)
+        setFilteredGame(res.data.slice(startIndex, endIndex))
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+    fetchFiltedData()
+  }
   return (
     <div>
       <Header />
@@ -46,7 +72,7 @@ function MostPlayed() {
           <div className="listbodyy">
             <h1>Most Played Single Player Game</h1>
             <div>
-              <GameFilter />
+              <GameFilter onFilter={handleFilter} />
             </div>
             <ul className="listcontainer">
               {filteredGame.map((game, index) => (
