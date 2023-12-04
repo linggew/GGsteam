@@ -50,10 +50,46 @@ app.get("/api/games/:id", async (req, res) => {
   })
 })
 
-//most poplar
+//most poplarn(/api/most-popluar?categoryid=none&age=none&pricelow=none&pricehigh=none&pcscore=none)
 app.get("/api/most-popular", async (req, res) => {
-  const query =
-    "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY RecommendationCount DESC LIMIT 1000"
+  var query = "SELECT Game.query_id, Game.QueryName, Game.HeaderImage"
+  var from = " FROM Game"
+  var where = " "
+  if (req.query.categoryid != "none"){
+    from = from + " NATURAL JOIN GameCategory"
+    where = where + " category_id="+req.query.categoryid
+  }
+  if (req.query.age != "none"){
+    if(where != " "){
+      where = where + " AND RequiredAge<="+req.query.age
+    }
+    else{
+      where = where + " RequiredAge<="+req.query.age
+    }
+  }
+  if (req.query.pricelow != "none" && req.query.pricehigh != "none"){
+    if(where != " "){
+      where = where + " AND "+req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+    else{
+      where = where +" "+ req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+  }
+  if (req.query.pcscore != "none"){
+    from = from + " JOIN PC"
+    if(where != " "){
+      where = where + " AND Game.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+    else{
+      where = where + " Game.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+  }
+  if(where==" "){
+    query = query+from+" ORDER BY RecommendationCount DESC LIMIT 1000"
+  }
+  else{
+    query = query+from+" WHERE"+where+" ORDER BY RecommendationCount DESC LIMIT 1000"
+  }
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error)
