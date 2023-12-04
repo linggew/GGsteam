@@ -13,7 +13,7 @@ const SignIn = () => {
     try {
       // Make an API call to your backend
       const response = await axios.get(config.apiUrl + '/api/login', {
-        params: { username, password },
+        params: { username: username, password: password },
       })
 
       // Check if login is successful based on the response

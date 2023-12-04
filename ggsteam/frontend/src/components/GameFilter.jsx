@@ -1,10 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Axios from 'axios'
+import config from '../config'
 
 const GameFilter = ({ onFilter }) => {
   const [category, setCategory] = useState('')
   const [age, setAge] = useState('')
   const [price, setPrice] = useState('')
   const [isPC, setIsPC] = useState(false)
+  const [gameCategory, setGameCategory] = useState([])
+  // const getGames = () => {
+  //   // Fetch popular games
+  //   Axios.get(config.apiUrl + '/api/category')
+  //     .then((res) => {
+  //       console.log('Popular Games:', res.data)
+  //       setGameCategory(res.data)
+  //       console.log('++++++++++++++++++++Category:' + res.data)
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching popular games:', error)
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   getGames()
+  // }, [])
 
   const handleFilter = () => {
     const filters = {

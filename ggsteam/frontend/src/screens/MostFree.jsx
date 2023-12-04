@@ -16,7 +16,15 @@ function MostFree() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/most4', {})
+        const res = await Axios.get(config.apiUrl + '/api/most4', {
+          params: {
+            categoryid: 'none',
+            age: 'none',
+            pricelow: 'none',
+            pricehigh: 'none',
+            pcscore: 'none',
+          },
+        })
         setGameList(res.data)
         setLoading(false)
         setFilteredGame(res.data.slice(startIndex, endIndex))
