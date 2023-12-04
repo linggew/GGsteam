@@ -180,8 +180,44 @@ app.get("/api/most2/most-viewd2", async (req, res) => {
 
 //best deal of single player
 app.get("/api/most3", async (req, res) => {
-  const query =
-    "SELECT query_id, QueryName, HeaderImage FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer') ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC LIMIT 1000;"
+  var from = " FROM (SELECT * FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer')) finalgame"
+  var query = "SELECT finalgame.query_id, finalgame.QueryName, finalgame.HeaderImage"
+  var where = " "
+  if (req.query.categoryid != "none"){
+    from = from + " NATURAL JOIN GameCategory"
+    where = where + " category_id="+req.query.categoryid
+  }
+  if (req.query.age != "none"){
+    if(where != " "){
+      where = where + " AND RequiredAge<="+req.query.age
+    }
+    else{
+      where = where + " RequiredAge<="+req.query.age
+    }
+  }
+  if (req.query.pricelow != "none" && req.query.pricehigh != "none"){
+    if(where != " "){
+      where = where + " AND "+req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+    else{
+      where = where +" "+ req.query.pricelow +"<= PriceFinal <="+req.query.pricehigh
+    }
+  }
+  if (req.query.pcscore != "none"){
+    from = from + " JOIN PC"
+    if(where != " "){
+      where = where + " AND finalgame.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+    else{
+      where = where + " finalgame.pc_id=PC.pc_id AND PC.Score <="+req.query.pcscore
+    }
+  }
+  if(where==" "){
+    query = query+from+" ORDER BY (finalgame.PriceFinal / finalgame.PriceInitial) ASC LIMIT 1000"
+  }
+  else{
+    query = query+from+" WHERE"+where+" ORDER BY (finalgame.PriceFinal / finalgame.PriceInitial) ASC LIMIT 1000"
+  }
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error)
