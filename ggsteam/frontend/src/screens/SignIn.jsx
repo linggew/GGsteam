@@ -25,6 +25,9 @@ const SignIn = () => {
         // navigate(`/?id=${response.data.user.user_id}`)
         // Save the user ID in local storage
         localStorage.setItem('userId', response.data.user.user_id)
+        localStorage.setItem('userName', response.data.user.user_name)
+        console.log('++++login' + JSON.stringify(response.data))
+        // localStorage.setItem('username', response.data.user.user_id)
 
         // Redirect to the dashboard on successful login
         navigate('/')
@@ -41,6 +44,9 @@ const SignIn = () => {
 
   return (
     <div className="loginContainer">
+      <h4 style={{ color: 'red' }}>
+        You need to login before access the website
+      </h4>
       <h1>Login Page</h1>
       <div className="loginbox">
         <label>

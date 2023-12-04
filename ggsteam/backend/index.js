@@ -238,7 +238,7 @@ app.get("/api/search", async (req, res) => {
 app.get("/api/login", async (req, res) => {
   const username = req.query.username
   const password = req.query.password // This should be a hashed password
-  const query = "SELECT user_id, password FROM User WHERE user_name = ?"
+  const query = "SELECT user_id,user_name, password FROM User WHERE user_name = ?"
 
   pool.query(query, [username], async (error, results) => {
     if (error) {
