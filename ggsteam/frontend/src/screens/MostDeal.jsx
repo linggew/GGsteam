@@ -43,7 +43,7 @@ function MostDeal() {
     // console.log('++++++++++++++++++++++++score:' + filter_param.score)
     const fetchFiltedData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/inner/most-played', {
+        const res = await Axios.get(config.apiUrl + '/api/inner/deal-singleplayer', {
           params: {
             categoryid: filter_param.category,
             age: filter_param.age,

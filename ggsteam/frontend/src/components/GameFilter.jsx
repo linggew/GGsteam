@@ -76,15 +76,15 @@ const GameFilter = ({ onFilter }) => {
       </p>
       <input
         type="number"
-        placeholder="Max Price"
-        value={price.max}
-        onChange={(e) => setPrice({ ...price, max: e.target.value })}
-      />
-      <input
-        type="number"
         placeholder="Min Price"
         value={price.min}
         onChange={(e) => setPrice({ ...price, min: e.target.value })}
+      />
+      <input
+        type="number"
+        placeholder="Max Price"
+        value={price.max}
+        onChange={(e) => setPrice({ ...price, max: e.target.value })}
       />
       <div>
         <p style={{ display: 'inline', fontWeight: 'bold', color: 'white' }}>
