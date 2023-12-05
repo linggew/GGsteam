@@ -21,7 +21,7 @@ const CommentForm = ({ user_id, query_id, initialText = "" }) => {
           window.location.reload(false);
         }
       }
-    } catch (error) {}
+    } catch (error) { window.alert("Only game owner can make comment!")}
   };
 
   const onSubmit = (event) => {
