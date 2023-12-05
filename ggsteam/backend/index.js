@@ -556,3 +556,34 @@ app.get("/api/username/:id", async (req, res) => {
     res.json(results);
   });
 });
+
+// create a pc then add to user
+app.post("/api/pc/addpc", async (req, res) => {
+  const { user_id, cpu, gpu, ram, storage, score } = req.body;
+  if (!user_id || !cpu || !gpu || !ram || !storage || !score) {
+    return res.status(401).send("pc information are required");
+  }
+  try {
+    // Insert the new comment into the database
+    const query =
+      "INSERT INTO PC(cpu, gpu, ram, storage, score) VALUES(?, ?, ?, ?, ?)";
+    pool.query(query, [cpu, gpu, ram, storage, score], (err, result) => {
+      if (err) {
+        console.error("Database query error:", err);
+        return res.status(500).send("Error: failed to add new pc");
+      }
+      const query2 =
+        "INSERT INTO UserPC(user_id, pc_id) VALUES(?, ?)";
+      pool.query(query2, [user_id, result.insertId], (err, result) => {
+        if (err) {
+          console.error("Database query error:", err);
+          return res.status(500).send("Error: failed to add new pc");
+        }
+        res.status(200).send("PC added");
+      });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});

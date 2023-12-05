@@ -51,7 +51,7 @@ const Menu = () => {
                 <Link to="/favorite">Favorite List</Link>
               </li>
               <li>
-                <Link to="/shopcart">Shop Cart</Link>
+                <Link to="/shopcart">Library</Link>
               </li>
               <li>
                 <Link to="/help">Help</Link>

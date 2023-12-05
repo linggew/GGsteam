@@ -7,7 +7,6 @@ const GameFilter = ({ onFilter }) => {
   const [age, setAge] = useState(100)
   const [price, setPrice] = useState({ min: '', max: '' })
   const [isPC, setIsPC] = useState(false)
-  const [rom, setRom] = useState('')
   const [ram, setRam] = useState('')
   const [cpu, setCpu] = useState('')
   const [gpu, setGpu] = useState('')
@@ -115,15 +114,6 @@ const GameFilter = ({ onFilter }) => {
           onChange={(e) => {
             setIsPC(true)
             setRam(e.target.value)
-          }}
-        />
-        <input
-          type="number"
-          placeholder="ROM"
-          value={rom}
-          onChange={(e) => {
-            setIsPC(true)
-            setRom(e.target.value)
           }}
         />
         <input
