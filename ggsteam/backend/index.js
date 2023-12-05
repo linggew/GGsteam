@@ -72,14 +72,14 @@ app.get("/api/most-popular", async (req, res) => {
         where +
         " AND " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     } else {
       where =
         where +
         " " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     }
   }
@@ -149,14 +149,14 @@ app.get("/api/most2", async (req, res) => {
         where +
         " AND " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     } else {
       where =
         where +
         " " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     }
   }
@@ -180,6 +180,7 @@ app.get("/api/most2", async (req, res) => {
       where +
       " ORDER BY SteamSpyOwners DESC LIMIT 1000";
   }
+  
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -228,14 +229,14 @@ app.get("/api/most3", async (req, res) => {
         where +
         " AND " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     } else {
       where =
         where +
         " " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     }
   }
@@ -373,14 +374,14 @@ app.get("/api/most5", async (req, res) => {
         where +
         " AND " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     } else {
       where =
         where +
         " " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     }
   }
@@ -454,14 +455,14 @@ app.get("/api/most6", async (req, res) => {
         where +
         " AND " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     } else {
       where =
         where +
         " " +
         req.query.pricelow +
-        "<= PriceFinal <=" +
+        "<= PriceFinal AND PriceFinal <=" +
         req.query.pricehigh;
     }
   }
