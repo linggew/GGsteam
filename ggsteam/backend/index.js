@@ -96,7 +96,7 @@ function filter(from, order, query) {
 
 
 //most poplarn(/api/most-popluar?categoryid=none&age=none&pricelow=none&pricehigh=none&pcscore=none)
-app.get("/api/most-popular", async (req, res) => {
+app.get("/api/inner/most-popular", async (req, res) => {
   var from = "Game";
   var order = "ORDER BY RecommendationCount DESC LIMIT 1000";
   var tmp = req.query;
@@ -113,7 +113,7 @@ app.get("/api/most-popular", async (req, res) => {
 });
 
 //most poplar top 10
-app.get("/api/most-popular/most-viewd1", async (req, res) => {
+app.get("/api/top/most-popular", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY RecommendationCount DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -127,7 +127,7 @@ app.get("/api/most-popular/most-viewd1", async (req, res) => {
 });
 
 //most played
-app.get("/api/most2", async (req, res) => {
+app.get("/api/inner/most-played", async (req, res) => {
   var from = "Game";
   var order = "ORDER BY SteamSpyOwners DESC LIMIT 1000";
   var tmp = req.query;
@@ -144,7 +144,7 @@ app.get("/api/most2", async (req, res) => {
 
 
 //most played top 10
-app.get("/api/most2/most-viewd2", async (req, res) => {
+app.get("/api/top/most-played", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY SteamSpyOwners DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -158,7 +158,7 @@ app.get("/api/most2/most-viewd2", async (req, res) => {
 });
 
 //best deal of single player
-app.get("/api/most3", async (req, res) => {
+app.get("/api/inner/deal-singleplayer", async (req, res) => {
   var from =
     "(SELECT * FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer')) FinalGame";
   var order = "ORDER BY (FinalGame.PriceFinal / FinalGame.PriceInitial) ASC LIMIT 1000";
@@ -175,7 +175,7 @@ app.get("/api/most3", async (req, res) => {
 });
 
 //best deal of single player top 10
-app.get("/api/most3/most-viewd3", async (req, res) => {
+app.get("/api/top/deal-singleplayer", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer') ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC LIMIT 10;";
   pool.query(query, (error, results) => {
@@ -189,9 +189,9 @@ app.get("/api/most3/most-viewd3", async (req, res) => {
 });
 
 //popular free game
-app.get("/api/most4", async (req, res) => {
-  var from = "(SELECT * FROM Game g1 WHERE g1.IsFree = 1)";
-  var order = "ORDER BY RecommendationCount DESC LIMIT 1000";
+app.get("/api/inner/popular-free", async (req, res) => {
+  var from = "(SELECT * FROM Game g1 WHERE g1.IsFree = 1) FinalGame";
+  var order = "ORDER BY FinalGame.RecommendationCount DESC LIMIT 1000";
   var tmp = req.query;
   var query = filter(from, order, tmp);
   pool.query(query, (error, results) => {
@@ -205,7 +205,7 @@ app.get("/api/most4", async (req, res) => {
 });
 
 //popular free game player top 10
-app.get("/api/most4/most-viewd4", async (req, res) => {
+app.get("/api/top/popular-free", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game WHERE IsFree=1 ORDER BY RecommendationCount DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -219,7 +219,7 @@ app.get("/api/most4/most-viewd4", async (req, res) => {
 });
 
 //Most Owned Paid Games with High Score
-app.get("/api/most5", async (req, res) => {
+app.get("/api/inner/owned-score-paid", async (req, res) => {
   var from =
     "(SELECT * FROM Game g NATURAL JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 WHERE g.Metacritic > 70 and IsFree = False) FinalGame";
   var order = "ORDER BY FinalGame.num_player LIMIT 1000";
@@ -236,7 +236,7 @@ app.get("/api/most5", async (req, res) => {
 });
 
 //Most Owned Paid Games with High Score top 10
-app.get("/api/most5/most-viewd5", async (req, res) => {
+app.get("/api/top/owned-score-paid", async (req, res) => {
   const query =
     "SELECT g.query_id, g.QueryName, g.HeaderImage FROM Game g LEFT JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 ON g.query_id = o1.query_id WHERE g.Metacritic > 70 and IsFree = False ORDER BY o1.num_player LIMIT 10;";
   pool.query(query, (error, results) => {
@@ -250,7 +250,7 @@ app.get("/api/most5/most-viewd5", async (req, res) => {
 });
 
 //most reviewd games
-app.get("/api/most6", async (req, res) => {
+app.get("/api/inner/reviewed", async (req, res) => {
   var from =
     "(SELECT * FROM Game g2 NATURAL JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1) FinalGame";
   var order = "ORDER BY FinalGame.countr DESC LIMIT 1000";
@@ -267,7 +267,7 @@ app.get("/api/most6", async (req, res) => {
 });
 
 //most reviewed games top 10
-app.get("/api/most6/most-viewd6", async (req, res) => {
+app.get("/api/top/reviewed", async (req, res) => {
   const query =
     "SELECT g2.query_id, g2.QueryName, g2.HeaderImage FROM Game g2 JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1 USING(query_id) ORDER BY countr DESC LIMIT 10";
   pool.query(query, (error, results) => {

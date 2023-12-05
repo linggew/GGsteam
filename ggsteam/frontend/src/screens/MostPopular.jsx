@@ -16,7 +16,7 @@ function MostPopular() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/most-popular', {
+        const res = await Axios.get(config.apiUrl + '/api/inner/most-popular', {
           params: {
             categoryid: 'none',
             age: 'none',
@@ -43,7 +43,7 @@ function MostPopular() {
     // console.log('++++++++++++++++++++++++score:' + filter_param.score)
     const fetchFiltedData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/most-popular', {
+        const res = await Axios.get(config.apiUrl + '/api/inner/most-popular', {
           params: {
             categoryid: filter_param.category,
             age: filter_param.age,

@@ -14,7 +14,7 @@ const HomeContent = () => {
   const userid = localStorage.getItem('userId')
   const getGames = () => {
     // Fetch popular games
-    Axios.get(config.apiUrl + '/api/most-popular/most-viewd1')
+    Axios.get(config.apiUrl + '/api/top/most-popular')
       .then((res) => {
         console.log('Popular Games:', res.data)
         setPopularGame(res.data)
@@ -24,7 +24,7 @@ const HomeContent = () => {
       })
 
     // Fetch most played games
-    Axios.get(config.apiUrl + '/api/most2/most-viewd2')
+    Axios.get(config.apiUrl + '/api/top/most-played')
       .then((res) => {
         console.log('Most Played Games:', res.data)
         setMostPlayGame(res.data)
@@ -34,7 +34,7 @@ const HomeContent = () => {
       })
 
     // Fetch best deal games
-    Axios.get(config.apiUrl + '/api/most3/most-viewd3')
+    Axios.get(config.apiUrl + '/api/top/deal-singleplayer')
       .then((res) => {
         console.log('Best Deal Games:', res.data)
         setBestDealGame(res.data)
@@ -44,7 +44,7 @@ const HomeContent = () => {
       })
 
     // Fetch popular free games
-    Axios.get(config.apiUrl + '/api/most4/most-viewd4')
+    Axios.get(config.apiUrl + '/api/top/popular-free')
       .then((res) => {
         console.log('Popular Free Games:', res.data)
         setPopularFreeGame(res.data)
@@ -54,7 +54,7 @@ const HomeContent = () => {
       })
 
     // Fetch most owned games
-    Axios.get(config.apiUrl + '/api/most5/most-viewd5')
+    Axios.get(config.apiUrl + '/api/top/owned-score-paid')
       .then((res) => {
         console.log('Most Owned Games:', res.data)
         setMostOwnedGame(res.data)
@@ -64,7 +64,7 @@ const HomeContent = () => {
       })
 
     // Fetch most reviewed games
-    Axios.get(config.apiUrl + '/api/most6/most-viewd6')
+    Axios.get(config.apiUrl + '/api/top/reviewed')
       .then((res) => {
         console.log('Most Reviewed Games:', res.data)
         setMostReviewedGame(res.data)
