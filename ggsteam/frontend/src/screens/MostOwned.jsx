@@ -16,7 +16,7 @@ function MostOwned() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/most5', {
+        const res = await Axios.get(config.apiUrl + '/api/inner/owned-score-paid', {
           params: {
             categoryid: 'none',
             age: 'none',
@@ -43,7 +43,7 @@ function MostOwned() {
     // console.log('++++++++++++++++++++++++score:' + filter_param.score)
     const fetchFiltedData = async () => {
       try {
-        const res = await Axios.get(config.apiUrl + '/api/most2', {
+        const res = await Axios.get(config.apiUrl + '/api/inner/most-played', {
           params: {
             categoryid: filter_param.category,
             age: filter_param.age,

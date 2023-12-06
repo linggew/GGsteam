@@ -10,7 +10,6 @@ CREATE TABLE PC (
     pc_id     INT PRIMARY KEY,
     CPU       VARCHAR(50),
     GPU       VARCHAR(50),
-    ROM       INT,
     Storage   INT,
     RAM       INT,
     Score     INT

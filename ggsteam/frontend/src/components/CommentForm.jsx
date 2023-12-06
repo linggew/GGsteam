@@ -8,7 +8,7 @@ const CommentForm = ({ user_id, query_id, initialText = "" }) => {
 
   const addComment = async (e) => {
     try {
-      if (window.confirm("Are you sure you want to remove comment?")) {
+      if (window.confirm("Are you sure you want to add comment?")) {
         const response = await Axios.post(
           config.apiUrl + "/api/comment/addcomment",
           {
@@ -21,7 +21,7 @@ const CommentForm = ({ user_id, query_id, initialText = "" }) => {
           window.location.reload(false);
         }
       }
-    } catch (error) {}
+    } catch (error) { window.alert("Only game owner can make comment!")}
   };
 
   const onSubmit = (event) => {

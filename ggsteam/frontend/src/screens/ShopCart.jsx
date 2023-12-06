@@ -40,7 +40,7 @@ function MostDeal() {
           <p className="loading">Loading...</p>
         ) : (
           <div className="listbodyy">
-            <h1>Your Owned Game</h1>
+            <h1>Game Library</h1>
             <ul className="listcontainer">
               {filteredGame.map((game, index) => (
                 <Link to={`/games/${game.query_id}`} className="link">

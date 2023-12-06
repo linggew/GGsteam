@@ -50,59 +50,58 @@ app.get("/api/games/:id", async (req, res) => {
   });
 });
 
-//most poplarn(/api/most-popluar?categoryid=none&age=none&pricelow=none&pricehigh=none&pcscore=none)
-app.get("/api/most-popular", async (req, res) => {
-  var query = "SELECT Game.query_id, Game.QueryName, Game.HeaderImage";
-  var from = " FROM Game";
-  var where = " ";
-  if (req.query.categoryid != "none") {
-    from = from + " NATURAL JOIN GameCategory";
-    where = where + " category_id=" + req.query.categoryid;
-  }
-  if (req.query.age != "none") {
-    if (where != " ") {
-      where = where + " AND RequiredAge<=" + req.query.age;
-    } else {
-      where = where + " RequiredAge<=" + req.query.age;
-    }
-  }
-  if (req.query.pricelow != "none" && req.query.pricehigh != "none") {
-    if (where != " ") {
-      where =
-        where +
-        " AND " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    } else {
-      where =
-        where +
-        " " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    }
-  }
-  if (req.query.pcscore != "none") {
-    from = from + " JOIN PC";
-    if (where != " ") {
-      where =
-        where + " AND Game.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    } else {
-      where =
-        where + " Game.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    }
-  }
-  if (where == " ") {
-    query = query + from + " ORDER BY RecommendationCount DESC LIMIT 1000";
+// helper functions for filter
+function add_and(where, condition) {
+  if (where != " ") {
+    where = where + " AND " + condition;
   } else {
-    query =
-      query +
-      from +
-      " WHERE" +
-      where +
-      " ORDER BY RecommendationCount DESC LIMIT 1000";
+    where = where + " " + condition;
   }
+  return where;
+}
+
+// filter
+function filter(from, order, query) {
+  var tmp = "SELECT query_id, QueryName, HeaderImage ";
+  tmp = tmp + "FROM " + from + " ";
+  var where = " ";
+
+  if (query.categoryid != "none") {
+    tmp = tmp + "NATURAL JOIN GameCategory ";
+    where = where + "category_id=" + query.categoryid;
+  }
+  if (query.age != "none") {
+    where = add_and(where, "RequiredAge<=" + query.age);
+  }
+  if (query.pricelow != "none") {
+    where = add_and(where, query.pricelow + "<= PriceFinal");
+  }
+  if (query.pricehigh != "none") {
+    where = add_and(where, "PriceFinal <=" + query.pricehigh);
+  }
+  if (query.pcscore != "none") {
+    tmp = tmp + "JOIN PC USING(pc_id)";
+    where = add_and(where, "PC.Score <=" + query.pcscore);
+  }
+
+  if (where != " ") {
+    tmp = tmp + "WHERE " + where + " " + order;
+  }
+  else {
+    tmp = tmp + order;
+  }
+
+  return tmp;
+}
+
+
+//most poplarn(/api/most-popluar?categoryid=none&age=none&pricelow=none&pricehigh=none&pcscore=none)
+app.get("/api/inner/most-popular", async (req, res) => {
+  var from = "Game";
+  var order = "ORDER BY RecommendationCount DESC LIMIT 1000";
+  var tmp = req.query;
+  var query = filter(from, order, tmp);
+  console.log(query);
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -114,7 +113,7 @@ app.get("/api/most-popular", async (req, res) => {
 });
 
 //most poplar top 10
-app.get("/api/most-popular/most-viewd1", async (req, res) => {
+app.get("/api/top/most-popular", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY RecommendationCount DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -128,58 +127,11 @@ app.get("/api/most-popular/most-viewd1", async (req, res) => {
 });
 
 //most played
-app.get("/api/most2", async (req, res) => {
-  var query = "SELECT Game.query_id, Game.QueryName, Game.HeaderImage";
-  var from = " FROM Game";
-  var where = " ";
-  if (req.query.categoryid != "none") {
-    from = from + " NATURAL JOIN GameCategory";
-    where = where + " category_id=" + req.query.categoryid;
-  }
-  if (req.query.age != "none") {
-    if (where != " ") {
-      where = where + " AND RequiredAge<=" + req.query.age;
-    } else {
-      where = where + " RequiredAge<=" + req.query.age;
-    }
-  }
-  if (req.query.pricelow != "none" && req.query.pricehigh != "none") {
-    if (where != " ") {
-      where =
-        where +
-        " AND " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    } else {
-      where =
-        where +
-        " " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    }
-  }
-  if (req.query.pcscore != "none") {
-    from = from + " JOIN PC";
-    if (where != " ") {
-      where =
-        where + " AND Game.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    } else {
-      where =
-        where + " Game.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    }
-  }
-  if (where == " ") {
-    query = query + from + " ORDER BY SteamSpyOwners DESC LIMIT 1000";
-  } else {
-    query =
-      query +
-      from +
-      " WHERE" +
-      where +
-      " ORDER BY SteamSpyOwners DESC LIMIT 1000";
-  }
+app.get("/api/inner/most-played", async (req, res) => {
+  var from = "Game";
+  var order = "ORDER BY SteamSpyOwners DESC LIMIT 1000";
+  var tmp = req.query;
+  var query = filter(from, order, tmp);
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -190,8 +142,9 @@ app.get("/api/most2", async (req, res) => {
   });
 });
 
+
 //most played top 10
-app.get("/api/most2/most-viewd2", async (req, res) => {
+app.get("/api/top/most-played", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game ORDER BY SteamSpyOwners DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -205,65 +158,12 @@ app.get("/api/most2/most-viewd2", async (req, res) => {
 });
 
 //best deal of single player
-app.get("/api/most3", async (req, res) => {
+app.get("/api/inner/deal-singleplayer", async (req, res) => {
   var from =
-    " FROM (SELECT * FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer')) finalgame";
-  var query =
-    "SELECT finalgame.query_id, finalgame.QueryName, finalgame.HeaderImage";
-  var where = " ";
-  if (req.query.categoryid != "none") {
-    from = from + " NATURAL JOIN GameCategory";
-    where = where + " category_id=" + req.query.categoryid;
-  }
-  if (req.query.age != "none") {
-    if (where != " ") {
-      where = where + " AND RequiredAge<=" + req.query.age;
-    } else {
-      where = where + " RequiredAge<=" + req.query.age;
-    }
-  }
-  if (req.query.pricelow != "none" && req.query.pricehigh != "none") {
-    if (where != " ") {
-      where =
-        where +
-        " AND " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    } else {
-      where =
-        where +
-        " " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    }
-  }
-  if (req.query.pcscore != "none") {
-    from = from + " JOIN PC";
-    if (where != " ") {
-      where =
-        where +
-        " AND finalgame.pc_id=PC.pc_id AND PC.Score <=" +
-        req.query.pcscore;
-    } else {
-      where =
-        where + " finalgame.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    }
-  }
-  if (where == " ") {
-    query =
-      query +
-      from +
-      " ORDER BY (finalgame.PriceFinal / finalgame.PriceInitial) ASC LIMIT 1000";
-  } else {
-    query =
-      query +
-      from +
-      " WHERE" +
-      where +
-      " ORDER BY (finalgame.PriceFinal / finalgame.PriceInitial) ASC LIMIT 1000";
-  }
+    "(SELECT * FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer')) FinalGame";
+  var order = "ORDER BY (FinalGame.PriceFinal / FinalGame.PriceInitial) ASC LIMIT 1000";
+  var tmp = req.query;
+  var query = filter(from, order, tmp);
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -275,7 +175,7 @@ app.get("/api/most3", async (req, res) => {
 });
 
 //best deal of single player top 10
-app.get("/api/most3/most-viewd3", async (req, res) => {
+app.get("/api/top/deal-singleplayer", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game g1 WHERE g1. PriceInitial > 0 and g1.query_id IN (SELECT gc.query_id FROM Category c NATURAL JOIN GameCategory gc WHERE c.category_name = 'CategorySinglePlayer') ORDER BY (g1.PriceFinal / g1.PriceInitial) ASC LIMIT 10;";
   pool.query(query, (error, results) => {
@@ -289,42 +189,11 @@ app.get("/api/most3/most-viewd3", async (req, res) => {
 });
 
 //popular free game
-app.get("/api/most4", async (req, res) => {
-  var query = "SELECT Game.query_id, Game.QueryName, Game.HeaderImage";
-  var from = " FROM Game";
-  var where = " ";
-  if (req.query.categoryid != "none") {
-    from = from + " NATURAL JOIN GameCategory";
-    where = where + " category_id=" + req.query.categoryid;
-  }
-  if (req.query.age != "none") {
-    if (where != " ") {
-      where = where + " AND RequiredAge<=" + req.query.age;
-    } else {
-      where = where + " RequiredAge<=" + req.query.age;
-    }
-  }
-  if (where != " ") {
-    where = where + " AND IsFree=1";
-  } else {
-    where = where + " IsFree=1";
-  }
-  if (req.query.pcscore != "none") {
-    from = from + " JOIN PC";
-    if (where != " ") {
-      where =
-        where + " AND Game.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    } else {
-      where =
-        where + " Game.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    }
-  }
-  query =
-    query +
-    from +
-    " WHERE" +
-    where +
-    " ORDER BY RecommendationCount DESC LIMIT 1000";
+app.get("/api/inner/popular-free", async (req, res) => {
+  var from = "(SELECT * FROM Game g1 WHERE g1.IsFree = 1) FinalGame";
+  var order = "ORDER BY FinalGame.RecommendationCount DESC LIMIT 1000";
+  var tmp = req.query;
+  var query = filter(from, order, tmp);
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -336,7 +205,7 @@ app.get("/api/most4", async (req, res) => {
 });
 
 //popular free game player top 10
-app.get("/api/most4/most-viewd4", async (req, res) => {
+app.get("/api/top/popular-free", async (req, res) => {
   const query =
     "SELECT query_id, QueryName, HeaderImage FROM Game WHERE IsFree=1 ORDER BY RecommendationCount DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -350,62 +219,12 @@ app.get("/api/most4/most-viewd4", async (req, res) => {
 });
 
 //Most Owned Paid Games with High Score
-app.get("/api/most5", async (req, res) => {
+app.get("/api/inner/owned-score-paid", async (req, res) => {
   var from =
-    " FROM (SELECT * FROM Game g NATURAL JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 WHERE g.Metacritic > 70 and IsFree = False) finalgame";
-  var query =
-    "SELECT finalgame.query_id, finalgame.QueryName, finalgame.HeaderImage";
-  var where = " ";
-  if (req.query.categoryid != "none") {
-    from = from + " NATURAL JOIN GameCategory";
-    where = where + " category_id=" + req.query.categoryid;
-  }
-  if (req.query.age != "none") {
-    if (where != " ") {
-      where = where + " AND RequiredAge<=" + req.query.age;
-    } else {
-      where = where + " RequiredAge<=" + req.query.age;
-    }
-  }
-  if (req.query.pricelow != "none" && req.query.pricehigh != "none") {
-    if (where != " ") {
-      where =
-        where +
-        " AND " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    } else {
-      where =
-        where +
-        " " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    }
-  }
-  if (req.query.pcscore != "none") {
-    from = from + " JOIN PC";
-    if (where != " ") {
-      where =
-        where +
-        " AND finalgame.pc_id=PC.pc_id AND PC.Score <=" +
-        req.query.pcscore;
-    } else {
-      where =
-        where + " finalgame.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    }
-  }
-  if (where == " ") {
-    query = query + from + " ORDER BY finalgame.num_player LIMIT 1000;";
-  } else {
-    query =
-      query +
-      from +
-      " WHERE" +
-      where +
-      " ORDER BY finalgame.num_player LIMIT 1000;";
-  }
+    "(SELECT * FROM Game g NATURAL JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 WHERE g.Metacritic > 70 and IsFree = False) FinalGame";
+  var order = "ORDER BY FinalGame.num_player LIMIT 1000";
+  var tmp = req.query;
+  var query = filter(from, order, tmp);
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -417,7 +236,7 @@ app.get("/api/most5", async (req, res) => {
 });
 
 //Most Owned Paid Games with High Score top 10
-app.get("/api/most5/most-viewd5", async (req, res) => {
+app.get("/api/top/owned-score-paid", async (req, res) => {
   const query =
     "SELECT g.query_id, g.QueryName, g.HeaderImage FROM Game g LEFT JOIN (SELECT o.query_id, count(o.user_id) as num_player FROM GameOwnedUser o Group by o.query_id) o1 ON g.query_id = o1.query_id WHERE g.Metacritic > 70 and IsFree = False ORDER BY o1.num_player LIMIT 10;";
   pool.query(query, (error, results) => {
@@ -431,58 +250,12 @@ app.get("/api/most5/most-viewd5", async (req, res) => {
 });
 
 //most reviewd games
-app.get("/api/most6", async (req, res) => {
+app.get("/api/inner/reviewed", async (req, res) => {
   var from =
-    " FROM (SELECT * FROM Game g2 NATURAL JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1) finalgame";
-  var query =
-    "SELECT finalgame.query_id, finalgame.QueryName, finalgame.HeaderImage";
-  var where = " ";
-  if (req.query.categoryid != "none") {
-    from = from + " NATURAL JOIN GameCategory";
-    where = where + " category_id=" + req.query.categoryid;
-  }
-  if (req.query.age != "none") {
-    if (where != " ") {
-      where = where + " AND RequiredAge<=" + req.query.age;
-    } else {
-      where = where + " RequiredAge<=" + req.query.age;
-    }
-  }
-  if (req.query.pricelow != "none" && req.query.pricehigh != "none") {
-    if (where != " ") {
-      where =
-        where +
-        " AND " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    } else {
-      where =
-        where +
-        " " +
-        req.query.pricelow +
-        "<= PriceFinal <=" +
-        req.query.pricehigh;
-    }
-  }
-  if (req.query.pcscore != "none") {
-    from = from + " JOIN PC";
-    if (where != " ") {
-      where =
-        where +
-        " AND finalgame.pc_id=PC.pc_id AND PC.Score <=" +
-        req.query.pcscore;
-    } else {
-      where =
-        where + " finalgame.pc_id=PC.pc_id AND PC.Score <=" + req.query.pcscore;
-    }
-  }
-  if (where == " ") {
-    query = query + from + " ORDER BY finalgame.countr DESC;";
-  } else {
-    query =
-      query + from + " WHERE" + where + " ORDER BY finalgame.countr DESC;";
-  }
+    "(SELECT * FROM Game g2 NATURAL JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1) FinalGame";
+  var order = "ORDER BY FinalGame.countr DESC LIMIT 1000";
+  var tmp = req.query;
+  var query = filter(from, order, tmp);
   pool.query(query, (error, results) => {
     if (error) {
       console.error("Database query error:", error);
@@ -494,7 +267,7 @@ app.get("/api/most6", async (req, res) => {
 });
 
 //most reviewed games top 10
-app.get("/api/most6/most-viewd6", async (req, res) => {
+app.get("/api/top/reviewed", async (req, res) => {
   const query =
     "SELECT g2.query_id, g2.QueryName, g2.HeaderImage FROM Game g2 JOIN (SELECT g.query_id, COUNT(r.review_id) as countr FROM Game g NATURAL JOIN Review r GROUP BY g.query_id) g1 USING(query_id) ORDER BY countr DESC LIMIT 10";
   pool.query(query, (error, results) => {
@@ -782,4 +555,35 @@ app.get("/api/username/:id", async (req, res) => {
     }
     res.json(results);
   });
+});
+
+// create a pc then add to user
+app.post("/api/pc/addpc", async (req, res) => {
+  const { user_id, cpu, gpu, ram, storage, score } = req.body;
+  if (!user_id || !cpu || !gpu || !ram || !storage || !score) {
+    return res.status(401).send("pc information are required");
+  }
+  try {
+    // Insert the new comment into the database
+    const query =
+      "INSERT INTO PC(cpu, gpu, ram, storage, score) VALUES(?, ?, ?, ?, ?)";
+    pool.query(query, [cpu, gpu, ram, storage, score], (err, result) => {
+      if (err) {
+        console.error("Database query error:", err);
+        return res.status(500).send("Error: failed to add new pc");
+      }
+      const query2 =
+        "INSERT INTO UserPC(user_id, pc_id) VALUES(?, ?)";
+      pool.query(query2, [user_id, result.insertId], (err, result) => {
+        if (err) {
+          console.error("Database query error:", err);
+          return res.status(500).send("Error: failed to add new pc");
+        }
+        res.status(200).send("PC added");
+      });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 });
