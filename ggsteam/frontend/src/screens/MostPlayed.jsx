@@ -13,6 +13,7 @@ function MostPlayed() {
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const [filteredGame, setFilteredGame] = useState(gameList)
+  const currentGamePage = filteredGame.slice(startIndex, endIndex)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,14 +28,14 @@ function MostPlayed() {
         })
         setGameList(res.data)
         setLoading(false)
-        setFilteredGame(res.data.slice(startIndex, endIndex))
+        setFilteredGame(res.data)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
     }
 
     fetchData()
-  }, [currentPage])
+  }, [])
 
   const handleFilter = (filter_param) => {
     // console.log('++++++++++++++++++++++++category:' + filter_param.category)
@@ -55,7 +56,8 @@ function MostPlayed() {
         })
         setGameList(res.data)
         setLoading(false)
-        setFilteredGame(res.data.slice(startIndex, endIndex))
+        setFilteredGame(res.data)
+        setCurrentPage(1)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -75,7 +77,7 @@ function MostPlayed() {
               <GameFilter onFilter={handleFilter} />
             </div>
             <ul className="listcontainer">
-              {filteredGame.map((game, index) => (
+              {currentGamePage.map((game, index) => (
                 <Link to={`/games/${game.query_id}`} className="link">
                   <li
                     key={index}
@@ -99,8 +101,9 @@ function MostPlayed() {
                   console.log('clicked')
                 }}
                 disabled={currentPage === 1}>
-                Previous1
+                Previous
               </button>
+              <p style={{ display: 'inline' }}>{currentPage}</p>
               <button
                 className="buttonL"
                 onClick={() => {
