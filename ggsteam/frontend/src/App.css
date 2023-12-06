@@ -99,12 +99,16 @@ nav ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url(./assets/login.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 0;
 }
 .loginbox {
   border: 2px solid #333;
   padding: 20px;
   border-radius: 8px;
-  background-color: antiquewhite;
+  background-color: rgba(24, 151, 230, 0.8);
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -226,7 +230,7 @@ h2 {
   flex-direction: column;
   width: 80%;
   margin-top: 50px;
-  background-color: rgba(44, 42, 42, 0.5);
+  background-color: rgba(44, 42, 42, 0.8);
 }
 .listcontainer {
   width: 50%;
@@ -253,7 +257,7 @@ h2 {
   text-decoration: none;
   color: black;
   border: 1px solid #61dafb;
-  background-color: rgba(211, 207, 207, 0.5);
+  background-color: rgba(211, 207, 207, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
