@@ -70,7 +70,7 @@ const SignIn = () => {
         <button onClick={handleLogin}>Login</button>
         <p>
           <span onClick={() => navigate('/forget-password')}>
-            Forget Password
+            Password Reset
           </span>{' '}
           | <span onClick={() => navigate('/sign-up')}>Sign Up</span>
         </p>
