@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import config from "../config";
 import "./CommentComponents.css";
+import CommentEditForm from "./CommentEditForm";
 
 const CommentItem = (props) => {
   const comment = props.item;
@@ -9,6 +10,7 @@ const CommentItem = (props) => {
   const reviewId = props.reviewId;
 
   const [commentUserName, setcommentUserName] = useState();
+  const [isEditing, setEditing] = useState(false);
 
   const confirmDeleteHandler = async () => {
     try {
@@ -25,6 +27,14 @@ const CommentItem = (props) => {
       }
     } catch (err) {
       console.error("Error deleting comment: ", err);
+    }
+  };
+
+  const confirmEditHandler = async () => {
+    try {
+      setEditing(!isEditing);
+    } catch (err) {
+      console.error("Error editing comment: ", err);
     }
   };
 
@@ -55,7 +65,18 @@ const CommentItem = (props) => {
         <div className='comment-text'>{comment}</div>
         <div>
           {creator.toString() === props.curUserId && (
-            <button onClick={confirmDeleteHandler}>Delete</button>
+            <div>
+              <button onClick={confirmDeleteHandler}>Delete</button>
+              <button onClick={confirmEditHandler}>
+                {isEditing ? "Cancel Edit" : "Edit"}
+              </button>
+              {isEditing && (
+                <CommentEditForm
+                  review_id={reviewId}
+                  review_content={comment}
+                />
+              )}
+            </div>
           )}
         </div>
       </div>
