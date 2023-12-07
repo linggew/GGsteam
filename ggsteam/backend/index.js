@@ -498,8 +498,9 @@ app.delete("/api/comment/removecomment/:id", async (req, res) => {
   });
 });
 
+
 //update query (req.body with user_id, query_id, review_content)
-app.post("/api/comment/updatecomment", async (req, res) => {
+app.put("/api/comment/updatecomment", async (req, res) => {
   const { review_id, review_content } = req.body;
   if (!review_id || !review_content) {
     return res.status(401).send("comment information are required");
